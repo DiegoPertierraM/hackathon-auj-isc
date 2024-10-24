@@ -8,3 +8,8 @@ export class User {
   created: Date;
   updated: Date;
 }
+export class SignUser {
+  id: string;
+  email: string;
+  password: string;
+}
