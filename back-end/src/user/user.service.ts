@@ -43,7 +43,7 @@ export class UserService {
     });
   }
 
-  async findOne(id: string): Promise<User> {
+  async findOne(id: number): Promise<User> {
     try {
       const user = await this.service.user.findUnique({
         where: { id },
@@ -62,7 +62,7 @@ export class UserService {
     }
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     try {
       return await this.service.user.update({
         where: { id },
@@ -76,7 +76,7 @@ export class UserService {
     }
   }
 
-  async remove(id: string): Promise<User> {
+  async remove(id: number): Promise<User> {
     try {
       return await this.service.user.delete({
         where: { id },

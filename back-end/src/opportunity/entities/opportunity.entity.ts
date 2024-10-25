@@ -1,5 +1,5 @@
 export class Opportunity {
-  id: string;
+  id: number;
   title: string;
   description: string;
   status: Status;

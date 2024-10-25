@@ -14,7 +14,7 @@ datasource db {
 }
 
 model User {
-  id       String   @id @default(uuid())
+  id       Int      @id @default(autoincrement())
   name     String
   password String
   email    String   @unique
@@ -26,7 +26,7 @@ model User {
 }
 
 model Participant {
-  id      String   @id @default(uuid())
+  id      Int      @id @default(autoincrement())
   name    String
   email   String   @unique
   ticket  Int
@@ -35,7 +35,7 @@ model Participant {
 }
 
 model Task {
-  id          String   @id @default(uuid())
+  id          Int      @id @default(autoincrement())
   title       String
   description String
   status      Status
@@ -46,7 +46,7 @@ model Task {
 }
 
 model Opportunity {
-  id          String   @id @default(uuid())
+  id          Int      @id @default(autoincrement())
   title       String
   description String
   status      Status   @default(new)

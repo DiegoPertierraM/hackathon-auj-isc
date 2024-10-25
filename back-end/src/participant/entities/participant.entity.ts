@@ -1,5 +1,5 @@
 export class Participant {
-  id: string;
+  id: number;
   name: string;
   email: string;
   ticket: number;

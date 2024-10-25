@@ -31,14 +31,14 @@ export class ParticipantController {
 
   @UseGuards(LoggerGuard)
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number) {
     return this.participantService.findOne(id);
   }
 
   @UseGuards(LoggerGuard)
   @Patch(':id')
   update(
-    @Param('id') id: string,
+    @Param('id') id: number,
     @Body() updateParticipantDto: UpdateParticipantDto,
   ) {
     return this.participantService.update(id, updateParticipantDto);
@@ -46,7 +46,7 @@ export class ParticipantController {
 
   @UseGuards(LoggerGuard)
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.participantService.remove(id);
   }
 }
