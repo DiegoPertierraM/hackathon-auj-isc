@@ -14,15 +14,16 @@ datasource db {
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
+  id       Int        @id @default(autoincrement())
   name     String
   password String
-  email    String   @unique
-  phone    String?  @unique
+  email    String     @unique
+  phone    String?    @unique
   company  String?
   tasks    Task[]
-  created  DateTime @default(now())
-  updated  DateTime @updatedAt
+  created  DateTime   @default(now())
+  updated  DateTime   @updatedAt
+  UserTask UserTask[]
 }
 
 model Participant {
@@ -35,14 +36,15 @@ model Participant {
 }
 
 model Task {
-  id          Int      @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   title       String
   description String
   status      Status
   dueDate     DateTime
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
   user        User[]
+  UserTask    UserTask[]
 }
 
 model Opportunity {
@@ -58,4 +60,14 @@ enum Status {
   new
   inProgress
   closed
+}
+
+model UserTask {
+  userId Int
+  taskId Int
+
+  user User @relation(fields: [userId], references: [id])
+  task Task @relation(fields: [taskId], references: [id])
+
+  @@id([userId, taskId])
 }
