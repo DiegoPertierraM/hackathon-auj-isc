@@ -20,8 +20,10 @@ model User {
   email    String   @unique
   phone    String?  @unique
   company  String?
+  tasks    Task[]
   created  DateTime @default(now())
   updated  DateTime @updatedAt
+  taskId   String
 }
 
 model Participant {
@@ -31,4 +33,30 @@ model Participant {
   ticket  Int
   created DateTime @default(now())
   updated DateTime @updatedAt
+}
+
+model Task {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  status      Status
+  dueDate     DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User[]
+}
+
+model Opportunity {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  status      Status   @default(new)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+enum Status {
+  new
+  inProgress
+  closed
 }
