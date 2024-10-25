@@ -6,40 +6,47 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ParticipantService } from './participant.service';
 import { CreateParticipantDto } from './dto/create-participant.dto';
 import { UpdateParticipantDto } from './dto/update-participant.dto';
+import { LoggerGuard } from '../core/guard/logger.guard';
 
 @Controller('participant')
 export class ParticipantController {
   constructor(private readonly participantService: ParticipantService) {}
 
+  @UseGuards(LoggerGuard)
   @Post()
   create(@Body() createParticipantDto: CreateParticipantDto) {
     return this.participantService.create(createParticipantDto);
   }
 
+  @UseGuards(LoggerGuard)
   @Get()
   findAll() {
     return this.participantService.findAll();
   }
 
+  @UseGuards(LoggerGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.participantService.findOne(+id);
+    return this.participantService.findOne(id);
   }
 
+  @UseGuards(LoggerGuard)
   @Patch(':id')
   update(
     @Param('id') id: string,
     @Body() updateParticipantDto: UpdateParticipantDto,
   ) {
-    return this.participantService.update(+id, updateParticipantDto);
+    return this.participantService.update(id, updateParticipantDto);
   }
 
+  @UseGuards(LoggerGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.participantService.remove(+id);
+    return this.participantService.remove(id);
   }
 }

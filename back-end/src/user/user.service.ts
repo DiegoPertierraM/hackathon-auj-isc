@@ -15,16 +15,20 @@ export class UserService {
   constructor(private service: PrismaService) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
-    return await this.service.user.create({
-      data: {
-        ...createUserDto,
-        password: hashedPassword,
-      },
-    });
+    try {
+      const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+      return await this.service.user.create({
+        data: {
+          ...createUserDto,
+          password: hashedPassword,
+        },
+      });
+    } catch (error) {
+      throw new InternalServerErrorException('Server Error');
+    }
   }
 
-  async findAll() {
+  async findAll(): Promise<User[]> {
     try {
       return await this.service.user.findMany();
     } catch (error) {
@@ -39,7 +43,7 @@ export class UserService {
     });
   }
 
-  async findOne(id: string) {
+  async findOne(id: string): Promise<User> {
     try {
       const user = await this.service.user.findUnique({
         where: { id },
@@ -58,7 +62,7 @@ export class UserService {
     }
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto) {
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
     try {
       return await this.service.user.update({
         where: { id },
@@ -72,7 +76,7 @@ export class UserService {
     }
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<User> {
     try {
       return await this.service.user.delete({
         where: { id },

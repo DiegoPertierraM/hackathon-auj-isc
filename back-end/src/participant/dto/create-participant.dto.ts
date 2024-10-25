@@ -3,6 +3,6 @@ export class CreateParticipantDto {
   name: string;
   email: string;
   ticket: number;
-  createdAt: Date;
-  updatedAt: Date;
+  created: Date;
+  updated: Date;
 }

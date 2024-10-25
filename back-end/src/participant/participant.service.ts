@@ -1,38 +1,82 @@
-import { Injectable } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateParticipantDto } from './dto/create-participant.dto';
 import { UpdateParticipantDto } from './dto/update-participant.dto';
 import { PrismaService } from '../prisma/prisma.service';
+import { Participant } from './entities/participant.entity';
 
 @Injectable()
 export class ParticipantService {
   constructor(private prisma: PrismaService) {}
 
-  async create(createParticipantDto: CreateParticipantDto) {
-    return await this.prisma.participant.create({
-      data: createParticipantDto,
-    });
+  async create(
+    createParticipantDto: CreateParticipantDto,
+  ): Promise<Participant> {
+    try {
+      return await this.prisma.participant.create({
+        data: createParticipantDto,
+      });
+    } catch (error) {
+      throw new InternalServerErrorException('Server Error');
+    }
   }
 
-  async findAll() {
-    return await this.prisma.participant.findMany();
+  async findAll(): Promise<Participant[]> {
+    try {
+      return await this.prisma.participant.findMany();
+    } catch (error) {
+      throw new InternalServerErrorException('Server Error');
+    }
   }
 
-  async findOne(id: string) {
-    return await this.prisma.participant.findUnique({
-      where: { id },
-    });
+  async findOne(id: string): Promise<Participant | null> {
+    try {
+      const participant = await this.prisma.participant.findUnique({
+        where: { id },
+      });
+      if (!participant) {
+        throw new NotFoundException(`Participant with ID ${id} not found`);
+      }
+      return participant;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new InternalServerErrorException('Server Error');
+    }
   }
 
-  async update(id: string, updateParticipantDto: UpdateParticipantDto) {
-    return await this.prisma.participant.update({
-      where: { id },
-      data: updateParticipantDto,
-    });
+  async update(
+    id: string,
+    updateParticipantDto: UpdateParticipantDto,
+  ): Promise<Participant> {
+    try {
+      return await this.prisma.participant.update({
+        where: { id },
+        data: updateParticipantDto,
+      });
+    } catch (error) {
+      if (error.code === 'P2025') {
+        throw new NotFoundException(`User with ID ${id} not found`);
+      }
+      throw error;
+    }
   }
 
-  async remove(id: string) {
-    return await this.prisma.participant.delete({
-      where: { id },
-    });
+  async remove(id: string): Promise<Participant> {
+    try {
+      return await this.prisma.participant.delete({
+        where: { id },
+      });
+    } catch (error) {
+      if (error.code === 'P2025') {
+        throw new NotFoundException(`User with ID ${id} not found`);
+      }
+      throw error;
+    }
   }
 }
