@@ -1,25 +1,44 @@
 # BACKEND with NestJS Impact Social Cup
 
-<p align="center">A progressive framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Route Description
 
-## Description
+Marked with (\*) need token
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### USER:
+
+```http
+http://localhost:3000/user/
+GET   - .../              Fetch all user (*)
+GET   - .../{id}          Fetch user by ID (*)
+GET   - .../email/{email} Filter user by email (*)
+GET   - .../login         If user have token grant access (*)
+POST  - .../login         Authenticacion with email, password in the body request
+POST  - .../              With User model in body create a user (*)
+PATCH - .../{id}          With User info in body use for update user data (*)
+DELETE- .../{id}          Delete user by ID (*)
+```
+
+### PARTICIPANT:
+
+```http
+http://localhost:3000/participant/
+GET   - .../              Fetch all participant (*)
+GET   - .../{id}          Fetch participant by ID (*)
+POST  - .../              With Participant model in body create participant (*)
+PATCH - .../{id}          With Participant info in body use for update participant (*)
+DELETE- .../{id}          Delete participant by ID (*)
+```
+
+### OPPORTUNITY
+
+```http
+http://localhost:3000/opportunity/
+GET   - .../              Fetch all opportunity (*)
+GET   - .../{id}          Fetch opportunity by ID (*)
+POST  - .../              With opportunity model in body create opportunity (*)
+PATCH - .../{id}          With opportunity info in body use for update opportunity (*)
+DELETE- .../{id}          Delete opportunity by ID (*)
+```
 
 ## Project setup
 
