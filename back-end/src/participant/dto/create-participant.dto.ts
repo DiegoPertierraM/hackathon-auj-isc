@@ -1,5 +1,5 @@
 export class CreateParticipantDto {
-  id: string;
+  id: number;
   name: string;
   email: string;
   ticket: number;

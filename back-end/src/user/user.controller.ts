@@ -29,7 +29,7 @@ export class UserController {
   }
   @UseGuards(LoggerGuard)
   @Get('/login')
-  async loginWithToken(@Body() validData: { payload: { id: string } }) {
+  async loginWithToken(@Body() validData: { payload: { id: number } }) {
     const userId = validData.payload.id;
     const user = await this.userService.findOne(userId);
     if (!user) {
@@ -69,18 +69,18 @@ export class UserController {
 
   @UseGuards(LoggerGuard)
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number) {
     return this.userService.findOne(id);
   }
 
   @UseGuards(LoggerGuard)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(id, updateUserDto);
   }
   @UseGuards(LoggerGuard)
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.userService.remove(id);
   }
 }

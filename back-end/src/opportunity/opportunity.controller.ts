@@ -30,21 +30,21 @@ export class OpportunityController {
 
   @UseGuards(LoggerGuard)
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number) {
     return this.opportunityService.findOne(id);
   }
 
   @UseGuards(LoggerGuard)
   @Patch(':id')
   update(
-    @Param('id') id: string,
+    @Param('id') id: number,
     @Body() updateOpportunityDto: UpdateOpportunityDto,
   ) {
     return this.opportunityService.update(id, updateOpportunityDto);
   }
   @UseGuards(LoggerGuard)
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.opportunityService.remove(id);
   }
 }

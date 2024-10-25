@@ -1,7 +1,7 @@
 import { Status } from '../entities/opportunity.entity';
 
 export class CreateOpportunityDto {
-  id: string;
+  id: number;
   title: string;
   description: string;
   status: Status;

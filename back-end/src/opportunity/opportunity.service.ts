@@ -32,7 +32,7 @@ export class OpportunityService {
     }
   }
 
-  async findOne(id: string): Promise<Opportunity> {
+  async findOne(id: number): Promise<Opportunity> {
     try {
       const opportunity = await this.service.opportunity.findUnique({
         where: { id },
@@ -52,7 +52,7 @@ export class OpportunityService {
   }
 
   async update(
-    id: string,
+    id: number,
     updateOpportunityDto: UpdateOpportunityDto,
   ): Promise<Opportunity> {
     try {
@@ -68,7 +68,7 @@ export class OpportunityService {
     }
   }
 
-  async remove(id: string): Promise<Opportunity> {
+  async remove(id: number): Promise<Opportunity> {
     try {
       return await this.service.opportunity.delete({
         where: { id },

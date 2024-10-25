@@ -33,7 +33,7 @@ export class ParticipantService {
     }
   }
 
-  async findOne(id: string): Promise<Participant | null> {
+  async findOne(id: number): Promise<Participant | null> {
     try {
       const participant = await this.prisma.participant.findUnique({
         where: { id },
@@ -51,7 +51,7 @@ export class ParticipantService {
   }
 
   async update(
-    id: string,
+    id: number,
     updateParticipantDto: UpdateParticipantDto,
   ): Promise<Participant> {
     try {
@@ -67,7 +67,7 @@ export class ParticipantService {
     }
   }
 
-  async remove(id: string): Promise<Participant> {
+  async remove(id: number): Promise<Participant> {
     try {
       return await this.prisma.participant.delete({
         where: { id },
