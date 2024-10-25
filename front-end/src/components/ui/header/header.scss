@@ -1,0 +1,24 @@
+.header {
+  padding: 1.4rem 1rem;
+
+  background-color: var(--secondary-color);
+  color: var(--bg-color);
+}
+
+.avatar {
+  margin-left: auto;
+  width: 10rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  &__name {
+    font-size: 0.875rem;
+    color: var(--primary-color);
+
+    display: flex;
+    flex-direction: column;
+  }
+  &__email {
+    color: var(--bg-color);
+  }
+}
