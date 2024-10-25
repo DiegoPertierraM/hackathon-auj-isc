@@ -1,5 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as bcrypt from 'bcryptjs';
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../prisma/prisma.service';
@@ -20,7 +25,11 @@ export class UserService {
   }
 
   async findAll() {
-    return await this.service.user.findMany();
+    try {
+      return await this.service.user.findMany();
+    } catch (error) {
+      throw new InternalServerErrorException('Server Error');
+    }
   }
 
   async findForLogin(email: string): Promise<SignUser | null> {
@@ -31,21 +40,48 @@ export class UserService {
   }
 
   async findOne(id: string) {
-    return await this.service.user.findUnique({
-      where: { id },
-    });
+    try {
+      const user = await this.service.user.findUnique({
+        where: { id },
+      });
+
+      if (!user) {
+        throw new NotFoundException(`User with ID ${id} not found`);
+      }
+
+      return user;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new InternalServerErrorException('Server Error');
+    }
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    return await this.service.user.update({
-      where: { id },
-      data: updateUserDto,
-    });
+    try {
+      return await this.service.user.update({
+        where: { id },
+        data: updateUserDto,
+      });
+    } catch (error) {
+      if (error.code === 'P2025') {
+        throw new NotFoundException(`User with ID ${id} not found`);
+      }
+      throw error;
+    }
   }
 
   async remove(id: string) {
-    return await this.service.user.delete({
-      where: { id },
-    });
+    try {
+      return await this.service.user.delete({
+        where: { id },
+      });
+    } catch (error) {
+      if (error.code === 'P2025') {
+        throw new NotFoundException(`User with ID ${id} not found`);
+      }
+      throw error;
+    }
   }
 }
