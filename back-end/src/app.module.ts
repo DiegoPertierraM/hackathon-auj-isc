@@ -6,6 +6,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { CoreModule } from './core/core.module';
 import { ParticipantModule } from './participant/participant.module';
+import { OpportunityModule } from './opportunity/opportunity.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ParticipantModule } from './participant/participant.module';
     PrismaModule,
     CoreModule,
     ParticipantModule,
+    OpportunityModule,
   ],
   controllers: [AppController],
   providers: [AppService],

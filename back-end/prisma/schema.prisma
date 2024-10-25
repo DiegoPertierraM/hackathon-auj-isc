@@ -23,7 +23,6 @@ model User {
   tasks    Task[]
   created  DateTime @default(now())
   updated  DateTime @updatedAt
-  taskId   String
 }
 
 model Participant {
