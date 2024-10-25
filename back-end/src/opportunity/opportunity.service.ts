@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { CreateOpportunityDto } from './dto/create-opportunity.dto';
 import { UpdateOpportunityDto } from './dto/update-opportunity.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { Opportunity } from './entities/opportunity.entity';
 
 @Injectable()
@@ -24,7 +24,7 @@ export class OpportunityService {
     }
   }
 
-  async findAll() {
+  async findAll(): Promise<Opportunity[]> {
     try {
       return await this.service.opportunity.findMany();
     } catch (error) {
@@ -32,7 +32,7 @@ export class OpportunityService {
     }
   }
 
-  async findOne(id: string) {
+  async findOne(id: string): Promise<Opportunity> {
     try {
       const opportunity = await this.service.opportunity.findUnique({
         where: { id },
@@ -51,7 +51,10 @@ export class OpportunityService {
     }
   }
 
-  async update(id: string, updateOpportunityDto: UpdateOpportunityDto) {
+  async update(
+    id: string,
+    updateOpportunityDto: UpdateOpportunityDto,
+  ): Promise<Opportunity> {
     try {
       return await this.service.opportunity.update({
         where: { id },
@@ -65,7 +68,7 @@ export class OpportunityService {
     }
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<Opportunity> {
     try {
       return await this.service.opportunity.delete({
         where: { id },
