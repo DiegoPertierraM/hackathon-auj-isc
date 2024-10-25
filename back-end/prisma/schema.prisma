@@ -23,3 +23,12 @@ model User {
   created  DateTime @default(now())
   updated  DateTime @updatedAt
 }
+
+model Participant {
+  id      String   @id @default(uuid())
+  name    String
+  email   String   @unique
+  ticket  Int
+  created DateTime @default(now())
+  updated DateTime @updatedAt
+}
