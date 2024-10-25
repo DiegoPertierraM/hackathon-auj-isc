@@ -1,0 +1,32 @@
+.aside {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  padding: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+
+  &__links {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  &__link {
+    padding: 1rem;
+    border-radius: 0.6rem;
+    transition:
+      background-color 0.2s ease-in,
+      color 0.2s ease-in;
+
+    font-size: 1.1em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &--active {
+      background-color: var(--secondary-color);
+      color: var(--bg-color);
+    }
+  }
+}

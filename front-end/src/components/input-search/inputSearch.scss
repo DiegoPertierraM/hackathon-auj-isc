@@ -1,0 +1,22 @@
+.search {
+  position: relative;
+  outline: 0.125rem solid var(--secondary-color);
+  border-radius: 0.3rem;
+  &:focus-within {
+    outline: 0.225rem solid var(--secondary-color);
+  }
+  &__input {
+    padding: 0.5rem 2rem;
+    width: 100%;
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__icon {
+    position: absolute;
+    top: 0.55rem;
+    left: 0.5rem;
+    color: var(--secondary-color);
+  }
+}

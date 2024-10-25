@@ -1,1 +1,14 @@
 @use './styles/reset/reset';
+
+.title {
+  font-size: clamp(1.5em, 2.5vw, 2em);
+  font-weight: 600;
+}
+.section {
+  padding: 1rem 2rem;
+}
+.auth-title {
+  font-size: clamp(2.25em, 3.5vw, 2.5em);
+  font-weight: 600;
+  color: #000;
+}

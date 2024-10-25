@@ -1,10 +1,29 @@
 /* Definimos las Custom properties */
+@font-face {
+  font-family: 'Montserrat';
+  src: url(./assets/font/Montserrat-Bold.woff) format('woff');
+  font-weight: 700;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url(./assets/font/Montserrat-SemiBold.woff) format('woff');
+  font-weight: 600;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url(./assets/font/Montserrat-Regular.woff) format('woff');
+  font-weight: 400;
+}
 :root {
   /* Colores */
-  --negro: #393939;
+  --primary-color: #feb855;
+  --secondary-color: #303446;
+  --text-color: #6b7280;
+  --bg-color: #fffdfb;
+  --error-color: red;
 
   /* Tipografía */
-  --tipo-principal: Helvetica, Arial, sans-serif;
+  --tipo-principal: 'Montserrat', Arial, sans-serif;
   --tipo-secundaria: Verdana;
 }
 
@@ -117,7 +136,7 @@ td {
 
 /* Evitamos problemas con los SVG */
 svg {
-  width: 100%;
+  // width: 100%;
   display: block;
   fill: currentColor;
 }
@@ -127,7 +146,7 @@ body {
   min-height: 100vh;
   font-size: 100%;
   font-family: var(--tipo-principal);
-  color: var(--negro);
+  color: var(--text-color);
   /* (Opcional) */
   hyphens: auto;
   /* (Opcional) */

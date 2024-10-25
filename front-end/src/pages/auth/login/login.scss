@@ -1,0 +1,38 @@
+.login {
+  background-color: #fffdfb;
+  height: 100dvh;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  &__content {
+    padding: 1rem 2rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    row-gap: 2rem;
+  }
+  &__logo {
+    width: 21.25rem;
+    align-self: center;
+  }
+  &__form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    &-btn {
+      background-color: #f0a444;
+      color: var(--bg-color);
+      padding: 0.5rem;
+      border-radius: 0.3rem;
+      font-weight: bold;
+    }
+  }
+
+  &__bg {
+    background-image: url('images/impact-social-bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+}
