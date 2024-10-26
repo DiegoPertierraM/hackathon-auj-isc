@@ -19,7 +19,6 @@ model User {
   password String
   email    String     @unique
   phone    String?    @unique
-  company  String?
   tasks    Task[]
   created  DateTime   @default(now())
   updated  DateTime   @updatedAt
@@ -36,30 +35,42 @@ model Participant {
 }
 
 model Task {
-  id          Int        @id @default(autoincrement())
-  title       String
-  description String
-  status      Status
-  dueDate     DateTime
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  user        User[]
-  UserTask    UserTask[]
+  id             Int        @id @default(autoincrement())
+  title          String
+  description    String
+  taskDate       DateTime
+  notification   DateTime?  @default(now())
+  expirationDate DateTime
+  created        DateTime   @default(now())
+  updated        DateTime   @updatedAt
+  user           User[]
+  UserTask       UserTask[]
 }
 
 model Opportunity {
   id          Int      @id @default(autoincrement())
   title       String
+  name        String
   description String
   status      Status   @default(new)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  created     DateTime @default(now())
+  updated     DateTime @updatedAt
 }
 
 enum Status {
   new
   inProgress
   closed
+}
+
+model Collaborators {
+  id      Int      @id @default(autoincrement())
+  name    String
+  email   String   @unique
+  phone   String   @unique
+  company String
+  created DateTime @default(now())
+  updated DateTime @updatedAt
 }
 
 model UserTask {

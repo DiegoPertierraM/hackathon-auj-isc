@@ -17,6 +17,7 @@ import { LoggerGuard } from '../core/guard/logger.guard';
 export class OpportunityController {
   constructor(private readonly opportunityService: OpportunityService) {}
 
+  @UseGuards(LoggerGuard)
   @Post()
   create(@Body() createOpportunityDto: CreateOpportunityDto) {
     return this.opportunityService.create(createOpportunityDto);

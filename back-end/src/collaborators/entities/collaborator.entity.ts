@@ -1,9 +1,9 @@
-export class CreateUserDto {
+export class Collaborator {
   id: number;
   name: string;
-  password: string;
   email: string;
-  phone?: string;
+  phone: string;
+  company: string;
   created: Date;
   updated: Date;
 }
