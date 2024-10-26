@@ -9,12 +9,15 @@ import { ParticipantModule } from './participant/participant.module';
 import { OpportunityModule } from './opportunity/opportunity.module';
 import { CollaboratorsModule } from './collaborators/collaborators.module';
 import { TaskModule } from './task/task.module';
+import { EmailModule } from './email/email.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    ScheduleModule.forRoot(),
     UserModule,
     PrismaModule,
     CoreModule,
@@ -22,6 +25,7 @@ import { TaskModule } from './task/task.module';
     OpportunityModule,
     CollaboratorsModule,
     TaskModule,
+    EmailModule,
   ],
   controllers: [AppController],
   providers: [AppService],
