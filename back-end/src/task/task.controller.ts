@@ -46,4 +46,15 @@ export class TaskController {
   remove(@Param('id') id: string) {
     return this.taskService.remove(+id);
   }
+  // Found user relacional to task
+  @UseGuards(LoggerGuard)
+  @Get(':taskId/users')
+  async getUsersByTask(@Param('taskId') taskId: number) {
+    return this.taskService.getUsersByTask(taskId);
+  }
+  @UseGuards(LoggerGuard)
+  @Get(':userId/tasks')
+  async getTasksByUser(@Param('userId') userId: number) {
+    return this.taskService.getTasksByUser(userId);
+  }
 }
