@@ -14,4 +14,18 @@ export const loginSchema = z.object({
     .min(1, { message: 'La contraseña no puede estar vacía' })
 });
 
+export const registerSchema = loginSchema
+  .extend({
+    confirmPassword: z
+      .string({
+        required_error: 'La confirmación de la contraseña es requerida'
+      })
+      .min(1, { message: 'La confirmación de la contraseña no puede estar vacía' })
+  })
+  .refine(data => data.password === data.confirmPassword, {
+    message: 'Las contraseñas no coinciden',
+    path: ['confirmPassword']
+  });
+
 export type Login = z.infer<typeof loginSchema>;
+export type Register = z.infer<typeof registerSchema>;
