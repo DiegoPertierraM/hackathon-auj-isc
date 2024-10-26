@@ -8,6 +8,7 @@ import { CoreModule } from './core/core.module';
 import { ParticipantModule } from './participant/participant.module';
 import { OpportunityModule } from './opportunity/opportunity.module';
 import { CollaboratorsModule } from './collaborators/collaborators.module';
+import { TaskModule } from './task/task.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { CollaboratorsModule } from './collaborators/collaborators.module';
     ParticipantModule,
     OpportunityModule,
     CollaboratorsModule,
+    TaskModule,
   ],
   controllers: [AppController],
   providers: [AppService],
