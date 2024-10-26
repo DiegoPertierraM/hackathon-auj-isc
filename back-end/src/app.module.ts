@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { CoreModule } from './core/core.module';
 import { ParticipantModule } from './participant/participant.module';
 import { OpportunityModule } from './opportunity/opportunity.module';
+import { CollaboratorsModule } from './collaborators/collaborators.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { OpportunityModule } from './opportunity/opportunity.module';
     CoreModule,
     ParticipantModule,
     OpportunityModule,
+    CollaboratorsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
