@@ -1,9 +1,11 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import { participantsSlice } from './participants/participantsSlice';
+import { opportunitiesSlice } from './participants/opportunitiesSlice';
 
 export const store = configureStore({
   reducer: {
-    participants: participantsSlice.reducer
+    participants: participantsSlice.reducer,
+    opportunities: opportunitiesSlice.reducer
   }
 });
 
