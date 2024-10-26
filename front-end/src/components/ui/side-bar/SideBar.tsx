@@ -6,14 +6,14 @@ import './sidebar.scss';
 
 const aside: Aside[] = [
   {
-    title: 'Participantes',
+    title: 'Colaboradores',
     path: '/',
-    icon: <IoPersonOutline size={25} />
+    icon: <IoPeopleOutline size={25} />
   },
   {
-    title: 'Colaboradores',
-    path: '/collaborators',
-    icon: <IoPeopleOutline size={25} />
+    title: 'Participantes',
+    path: '/participants',
+    icon: <IoPersonOutline size={25} />
   },
   {
     title: 'Oportunidades',

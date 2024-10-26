@@ -1,8 +1,10 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import { participantsSlice } from './participants/participantsSlice';
+import { collaboratorsSlice } from './collaborators/collaboratorsSlice';
 
 export const store = configureStore({
   reducer: {
+    collaborators: collaboratorsSlice.reducer,
     participants: participantsSlice.reducer
   }
 });
