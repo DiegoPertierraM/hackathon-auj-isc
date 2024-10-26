@@ -4,7 +4,6 @@ export class User {
   email: string;
   password: string;
   phone?: string;
-  company?: string;
   created: Date;
   updated: Date;
 }
