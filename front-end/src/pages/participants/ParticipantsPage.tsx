@@ -2,7 +2,7 @@ import { IoAddOutline, IoPencilOutline, IoTrashBinOutline } from 'react-icons/io
 import { useSelector } from 'react-redux';
 import { InputSearch, Title } from '../../components';
 import { getParticipants } from '../../store/participants/participantsSlice';
-import './paticipant.scss';
+import './participant.scss';
 
 export const ParticipantsPage = () => {
   const participants = useSelector(getParticipants);

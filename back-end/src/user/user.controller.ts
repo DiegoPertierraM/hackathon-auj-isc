@@ -83,4 +83,17 @@ export class UserController {
   remove(@Param('id') id: number) {
     return this.userService.remove(id);
   }
+
+  @UseGuards(LoggerGuard)
+  @Post(':userId/tasks')
+  async addTaskToUser(
+    @Param('userId') userId: number,
+    @Body('taskId') taskId: number,
+  ) {
+    return this.userService.addTaskToUser(userId, taskId);
+  }
+  @Post('password-recovery')
+  async passwordRecovery(@Body('email') email: string) {
+    return this.userService.passwordRecovery(email);
+  }
 }

@@ -9,10 +9,14 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { SignUser, User } from './entities/user.entity';
+import { EmailService } from 'src/email/email.service';
 
 @Injectable()
 export class UserService {
-  constructor(private service: PrismaService) {}
+  constructor(
+    private readonly service: PrismaService,
+    private readonly mailService: EmailService,
+  ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     try {
@@ -87,5 +91,46 @@ export class UserService {
       }
       throw error;
     }
+  }
+
+  //add user to task and send notificacion by email
+  async addTaskToUser(userId: number, taskId: number) {
+    const taskToUser = this.service.userTask.create({
+      data: {
+        userId,
+        taskId,
+      },
+    });
+    const user = await this.findOne(userId);
+    const task = await this.service.task.findUnique({
+      where: { id: taskId },
+    });
+    this.mailService.sendEmail(
+      'Impact Social Cup',
+      user.email,
+      'Task assigned',
+      `You have been assigned to the task ${task.title}`,
+    );
+
+    return taskToUser;
+  }
+  //passwrod recovery
+  async passwordRecovery(email: string) {
+    const user = await this.findForLogin(email);
+    if (!user) {
+      throw new NotFoundException(`User with ${email} not found`);
+    }
+    const newPassword = Math.random().toString(36).slice(-8);
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await this.service.user.update({
+      where: { id: user.id },
+      data: { password: hashedPassword },
+    });
+    this.mailService.sendEmail(
+      'Impact Social Cup',
+      user.email,
+      'Password recovery',
+      `Your new password is ${newPassword}`,
+    );
   }
 }

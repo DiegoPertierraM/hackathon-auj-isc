@@ -1,12 +1,19 @@
 @use './styles/reset/reset';
 
+body {
+  background-color: var(--bg-color);
+}
+
 .title {
-  font-size: clamp(1.5em, 2.5vw, 2em);
+  font-size: clamp(1em, 2.5vw, 1.3em);
   font-weight: 600;
+  color: var(--secondary-color);
 }
+
 .section {
-  padding: 1rem 2rem;
+  padding: 1rem 1.5rem;
 }
+
 .auth-title {
   font-size: clamp(2.25em, 3.5vw, 2.5em);
   font-weight: 600;
