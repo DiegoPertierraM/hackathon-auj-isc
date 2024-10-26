@@ -5,11 +5,11 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   &__content {
-    padding: 1rem 2rem;
+    padding: 1rem 10rem;
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     row-gap: 2rem;
   }
   &__logo {
@@ -20,13 +20,29 @@
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
+
+    label {
+      font-weight: bold;
+      color: #020202;
+      font-size: 20px;
+      margin-bottom: 0.5rem;
+    }
+
     &-btn {
       background-color: #f0a444;
       color: var(--bg-color);
-      padding: 0.5rem;
+      padding: 0.9rem;
       border-radius: 0.3rem;
       font-weight: bold;
+      cursor: pointer;
     }
+  }
+  &__forgot-password {
+    color: #7485d0;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-align: right;
+    margin-top: -0.5rem;
   }
 
   &__bg {
@@ -34,5 +50,9 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+  }
+  &__register-link {
+    color: #7485d0;
+    text-decoration: none;
   }
 }
