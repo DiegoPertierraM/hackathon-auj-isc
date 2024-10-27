@@ -1,7 +1,7 @@
 export interface Participant {
-  id: string;
+  id: number;
   name: string;
   email: string;
   phone: string;
-  tikets: number;
+  tickets: number;
 }

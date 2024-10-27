@@ -48,8 +48,11 @@
       gap: 1rem;
       justify-content: center;
     }
-  }
-  &__data:nth-child(4) {
-    text-align: center;
+    &--name {
+      max-width: 15ch;
+    }
+    &--tickets {
+      text-align: center;
+    }
   }
 }

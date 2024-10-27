@@ -31,7 +31,7 @@ export const CollaboratorsPage = () => {
         <tbody>
           {collaborators.map(collaborator => (
             <tr key={collaborator.id} className="table__row">
-              <td className="table__data">{collaborator.name}</td>
+              <td className="table__data--name">{collaborator.name}</td>
               <td className="table__data">{collaborator.email}</td>
               <td className="table__data">{collaborator.phone}</td>
               <td className="table__data">{collaborator.company}</td>

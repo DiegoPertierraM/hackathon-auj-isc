@@ -24,14 +24,14 @@ export const OpportunitiesPage = () => {
             <th className="table__th">Nombre</th>
             <th>Email</th>
             <th>Teléfono</th>
-            <th>Nº entradas</th>
-            <th>Acciones</th>
+            <th>Estado</th>
+            <th>Compañía</th>
           </tr>
         </thead>
         <tbody>
           {opportunities.map(opportunity => (
             <tr key={opportunity.id} className="table__row">
-              <td className="table__data">{opportunity.name}</td>
+              <td className="table__data--name">{opportunity.name}</td>
               <td className="table__data">{opportunity.email}</td>
               <td className="table__data">{opportunity.phone}</td>
               <td className="table__data">{opportunity.status}</td>
