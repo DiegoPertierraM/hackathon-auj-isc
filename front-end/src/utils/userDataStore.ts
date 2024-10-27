@@ -11,7 +11,7 @@ export const removeUserData = () => {
   localStorage.removeItem('token');
 };
 
-export const getUserData = (): User | null => {
+export const getUserDataFromStorage = (): User | null => {
   const userData = localStorage.getItem('userData');
   return userData ? JSON.parse(userData) : null;
 };
