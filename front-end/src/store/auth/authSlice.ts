@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { User } from '../../interfaces/User.interface';
+import { getUserDataFromStorage } from '../../utils/userDataStore';
 import { RootState } from '../store';
 import { loginThunk } from './authThunk';
 
@@ -9,11 +10,12 @@ interface AuthState {
   user: User | null;
   error: string | null;
 }
+const userDataFromLocalStorage = getUserDataFromStorage();
 
 const initialState: AuthState = {
   isLoading: false,
-  isAuthenticated: false,
-  user: null,
+  isAuthenticated: !!userDataFromLocalStorage,
+  user: userDataFromLocalStorage ? userDataFromLocalStorage : null,
   error: null
 };
 
