@@ -7,6 +7,7 @@ import { User } from 'src/user/entities/user.entity';
 export type Payload = {
   id: string;
   name: string;
+  email: string;
 };
 
 @Injectable()
