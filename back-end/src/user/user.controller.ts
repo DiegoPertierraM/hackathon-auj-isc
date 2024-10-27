@@ -56,8 +56,8 @@ export class UserController {
     }
     return {
       token: await this.tokenService.createToken(user),
-      user: user.id,
-      email: user.email,
+      userId: user.id,
+      UserEmail: user.email,
     };
   }
   @UseGuards(LoggerGuard)
