@@ -23,8 +23,8 @@ export class TokenService {
   async compare(value: string, hash: string) {
     return compare(value, hash);
   }
-  async createToken({ id, name }: Partial<User>) {
-    const payload = { id, name };
+  async createToken({ id, name, email }: Partial<User>) {
+    const payload = { id, name, email };
     const token = this.jwtService.signAsync(payload, {
       secret: this.configService.get('SECRET_TOKEN'),
     });

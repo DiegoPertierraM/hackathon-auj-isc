@@ -36,7 +36,7 @@ export class UserController {
     if (!user) {
       throw new ForbiddenException('Token invalid');
     }
-    return { token: await this.tokenService.createToken(user) };
+    return { token: await this.tokenService.createToken(user), userId };
   }
 
   @Post('/login')
@@ -54,7 +54,11 @@ export class UserController {
     if (!isPasswordValid) {
       throw new ForbiddenException('Email or password invalid');
     }
-    return { token: await this.tokenService.createToken(user) };
+    return {
+      token: await this.tokenService.createToken(user),
+      user: user.id,
+      email: user.email,
+    };
   }
   @UseGuards(LoggerGuard)
   @Get()
