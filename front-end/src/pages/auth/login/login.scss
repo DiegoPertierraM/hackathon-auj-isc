@@ -1,19 +1,19 @@
 .login {
   background-color: #fffdfb;
   height: 100dvh;
-
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   &__content {
-    padding: 1rem 10rem;
-
+    padding: 1rem 0rem;
+    max-width: 400px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: center;
     row-gap: 2rem;
   }
   &__logo {
-    width: 21.25rem;
+    width: 14rem;
     align-self: center;
   }
   &__form {
@@ -24,14 +24,14 @@
     label {
       font-weight: bold;
       color: #020202;
-      font-size: 20px;
+      font-size: 1em;
       margin-bottom: 0.5rem;
     }
 
     &-btn {
       background-color: #f0a444;
       color: var(--bg-color);
-      padding: 0.9rem;
+      padding: 0.7rem;
       border-radius: 0.3rem;
       font-weight: bold;
       cursor: pointer;
@@ -54,5 +54,14 @@
   &__register-link {
     color: #7485d0;
     text-decoration: none;
+  }
+}
+
+@media (width < 750px) {
+  .login {
+    grid-template-columns: initial;
+    &__bg {
+      display: none;
+    }
   }
 }

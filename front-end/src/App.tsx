@@ -24,10 +24,11 @@ export const App = () => {
         </Route>
 
         <Route path="/" element={<DashBoard />}>
-          <Route index element={<ParticipantsPage />} />
+          <Route index element={<CollaboratorsPage />} />
           <Route path="collaborators" element={<CollaboratorsPage />} />
           <Route path="collaborators/:id" element={<CollaboratorsPage />} />
-
+          <Route path="participants" element={<ParticipantsPage />} />
+          <Route path="participants/:id" element={<ParticipantsPage />} />
           <Route path="opportunities" element={<OpportunitiesPage />} />
           <Route path="tasks" element={<TasksPage />} />
 

@@ -1,0 +1,55 @@
+.collaborators {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.5rem;
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.button {
+  background-color: var(--primary-color);
+  color: var(--bg-color);
+  padding: 0.5rem 0.8rem;
+  border-radius: 0.3rem;
+  font-size: 0.7em;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+}
+
+.table {
+  width: 100%;
+  border-radius: 0.3rem;
+  overflow: hidden;
+  font-size: 0.8em;
+
+  &__head {
+    background-color: #f9fafb;
+    text-align: left;
+    &-row {
+      padding: 1rem;
+    }
+  }
+  &__th {
+    padding: 0.5rem 0;
+  }
+  &__row {
+    text-align: left;
+  }
+  &__data {
+    padding: 1rem 0;
+    &--actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+    &--name {
+      max-width: 15ch;
+    }
+  }
+}
