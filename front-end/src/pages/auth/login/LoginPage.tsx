@@ -59,7 +59,7 @@ export const LoginPage = () => {
           <p className="login__forgot-password">¿Olvidaste tu contraseña?</p>
 
           <button className="login__form-btn" type="submit">
-            {isLoading ? 'Cargando...' : 'Iniciar sesión'}
+            {isLoading ? 'Iniciando sesión...' : 'Iniciar sesión'}
           </button>
           <p className="login__link-register">
             ¿No tienes cuenta?
