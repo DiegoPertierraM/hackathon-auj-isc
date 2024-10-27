@@ -1,11 +1,25 @@
 import { IoAddOutline, IoPencilOutline, IoTrashBinOutline } from 'react-icons/io5';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { InputSearch, Title } from '../../components';
-import { getCollaborators } from '../../store/collaborators/collaboratorsSlice';
+import { getCollaborators, getError, getLoading } from '../../store/collaborators/collaboratorsSlice';
 import './collaborator.scss';
+import { useEffect } from 'react';
+import { AppDispatch } from '../../store/store';
+import { fetchCollaborators } from '../../store/collaborators/collaboratorsThunk';
 
 export const CollaboratorsPage = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const collaborators = useSelector(getCollaborators);
+  const loading = useSelector(getLoading);
+  const error = useSelector(getError);
+
+  useEffect(() => {
+    dispatch(fetchCollaborators());
+  }, [dispatch]);
+
+  if (loading === 'loading') return <p>Loading collaborators...</p>;
+  if (error) return <p>Error: {error}</p>;
+
   return (
     <section className="collaborators section">
       <Title title="Colaboradores" />
@@ -29,7 +43,7 @@ export const CollaboratorsPage = () => {
           </tr>
         </thead>
         <tbody>
-          {collaborators.map(collaborator => (
+          {collaborators!.map(collaborator => (
             <tr key={collaborator.id} className="table__row">
               <td className="table__data--name">{collaborator.name}</td>
               <td className="table__data">{collaborator.email}</td>
