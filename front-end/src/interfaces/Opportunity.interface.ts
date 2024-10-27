@@ -7,4 +7,4 @@ export interface Opportunity {
   company: string;
 }
 
-export type Status = 'new' | 'inProgress' | 'closed';
+export type Status = 'Nuevo' | 'En proceso' | 'Cerrado';

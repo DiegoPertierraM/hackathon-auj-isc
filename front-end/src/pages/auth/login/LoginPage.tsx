@@ -25,7 +25,7 @@ export const LoginPage = () => {
       <div className="login__content">
         <img className="login__logo" src="/images/auth-logo.png" alt="" />
 
-        <h2 className="auth-title">Bienvenido</h2>
+        <h2 className="auth-title">Bienvenido de nuevo</h2>
 
         <form className="login__form" onSubmit={handleSubmit(onHandleSubmit)}>
           <FormInput

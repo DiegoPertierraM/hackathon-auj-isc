@@ -6,7 +6,7 @@ export const opportunities: Opportunity[] = [
     name: 'Pepito Garrogerricaechevarria',
     email: 'pepito1@email.com',
     phone: '+34 654 321 001',
-    status: 'inProgress',
+    status: 'En proceso',
     company: 'Vodafone'
   },
   {
@@ -14,7 +14,7 @@ export const opportunities: Opportunity[] = [
     name: 'Ana Martínez',
     email: 'ana.martinez@email.com',
     phone: '+34 612 345 678',
-    status: 'closed',
+    status: 'Cerrado',
     company: 'Telefónica'
   },
   {
@@ -22,7 +22,7 @@ export const opportunities: Opportunity[] = [
     name: 'Carlos López',
     email: 'carlos.lopez@email.com',
     phone: '+34 623 456 789',
-    status: 'new',
+    status: 'Nuevo',
     company: 'Orange'
   },
   {
@@ -30,7 +30,7 @@ export const opportunities: Opportunity[] = [
     name: 'Lucía Fernández',
     email: 'lucia.fernandez@email.com',
     phone: '+34 634 567 890',
-    status: 'inProgress',
+    status: 'En proceso',
     company: 'Movistar'
   },
   {
@@ -38,7 +38,7 @@ export const opportunities: Opportunity[] = [
     name: 'Javier Gómez',
     email: 'javier.gomez@email.com',
     phone: '+34 645 678 901',
-    status: 'closed',
+    status: 'Cerrado',
     company: 'Vodafone'
   },
   {
@@ -46,7 +46,7 @@ export const opportunities: Opportunity[] = [
     name: 'María Rodríguez',
     email: 'maria.rodriguez@email.com',
     phone: '+34 656 789 012',
-    status: 'inProgress',
+    status: 'En proceso',
     company: 'Yoigo'
   },
   {
@@ -54,7 +54,7 @@ export const opportunities: Opportunity[] = [
     name: 'Sofía Pérez',
     email: 'sofia.perez@email.com',
     phone: '+34 667 890 123',
-    status: 'new',
+    status: 'Nuevo',
     company: 'Pepephone'
   },
   {
@@ -62,7 +62,7 @@ export const opportunities: Opportunity[] = [
     name: 'Diego Ruiz',
     email: 'diego.ruiz@email.com',
     phone: '+34 678 901 234',
-    status: 'inProgress',
+    status: 'En proceso',
     company: 'Lowi'
   },
   {
@@ -70,7 +70,7 @@ export const opportunities: Opportunity[] = [
     name: 'Clara Jiménez',
     email: 'clara.jimenez@email.com',
     phone: '+34 689 012 345',
-    status: 'closed',
+    status: 'Cerrado',
     company: 'Vodafone'
   },
   {
@@ -78,7 +78,7 @@ export const opportunities: Opportunity[] = [
     name: 'Pedro Sánchez',
     email: 'pedro.sanchez@email.com',
     phone: '+34 690 123 456',
-    status: 'new',
+    status: 'Nuevo',
     company: 'Telefónica'
   }
 ];

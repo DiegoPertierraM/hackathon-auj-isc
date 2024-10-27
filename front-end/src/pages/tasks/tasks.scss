@@ -1,4 +1,4 @@
-.opportunities {
+.tasks {
   display: flex;
   flex-direction: column;
   row-gap: 1.5rem;
@@ -48,8 +48,8 @@
       gap: 1rem;
       justify-content: center;
     }
-    &--name {
-      max-width: 15ch;
+    &--desc {
+      max-width: 250px;
     }
   }
 }

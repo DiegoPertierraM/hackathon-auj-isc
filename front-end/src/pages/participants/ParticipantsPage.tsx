@@ -31,10 +31,10 @@ export const ParticipantsPage = () => {
         <tbody>
           {participants.map(participant => (
             <tr key={participant.id} className="table__row">
-              <td className="table__data">{participant.name}</td>
+              <td className="table__data--name">{participant.name}</td>
               <td className="table__data">{participant.email}</td>
               <td className="table__data">{participant.phone}</td>
-              <td className="table__data">{participant.tikets}</td>
+              <td className="table__data--tickets">{participant.tickets}</td>
               <td className="table__data table__data--actions">
                 <IoPencilOutline /> <IoTrashBinOutline />
               </td>
