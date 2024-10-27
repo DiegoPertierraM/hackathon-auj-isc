@@ -107,48 +107,72 @@ export class TaskService {
     });
   }
 
-  // this send email for notificacion of task
+  //Send email for notificacion of task that have tomorrow
   @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
   async checkTaskNotification() {
+    console.log('Checking task notifications for tomorrow');
+
     const tasks = await this.findAll();
     const now = new Date();
+    const tomorrow = new Date(now);
+    tomorrow.setDate(now.getDate());
+    tomorrow.setHours(0, 0, 0, 0);
+
     for (const task of tasks) {
       const taskDate = new Date(task.notification);
-      const timeDiff = taskDate.getTime() - now.getTime();
-      //if left one day for the notification
-      if (timeDiff <= 24 * 60 * 60 * 1000 && timeDiff > 23 * 60 * 60 * 1000) {
+      console.log(
+        `taskDate: ${taskDate.toDateString()}, tomorrow: ${tomorrow.toDateString()}`,
+      );
+
+      // Verify if the task is tomorrow
+      if (taskDate.toDateString() === tomorrow.toDateString()) {
         const users = await this.findUsersByTaskId(task.id);
         for (const user of users) {
-          await this.mailService.sendEmail(
-            'Impact Social Cup',
-            user.email,
-            'Notificacion de tarea',
-            `La tarea ${task.title} tiene lugar mañana a las ${taskDate.getHours()}:${taskDate.getMinutes()}`,
-            `<h1>La tarea ${task.title} tiene lugar mañana a las ${taskDate.getHours()}:${taskDate.getMinutes()}</h1>`,
-          );
+          try {
+            console.log(`Checking task expiration by email to ${user.email}`);
+            await this.mailService.sendEmail(
+              'Impact Social Cup',
+              user.email,
+              'Notificacion de tarea',
+              `La tarea ${task.title} tiene lugar mañana a las ${taskDate.getHours()}:${taskDate.getMinutes()}`,
+              `<h1>La tarea ${task.title} tiene lugar mañana a las ${taskDate.getHours()}:${taskDate.getMinutes()}</h1>`,
+            );
+          } catch (error) {
+            console.error('Error sending email:', error);
+          }
         }
       }
     }
   }
-
+  //Send email for notificacion of task expire tomorrow
   @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
   async checkTaskExpiration() {
+    console.log('Checking task expiration');
     const tasks = await this.findAll();
     const now = new Date();
+    const tomorrow = new Date(now);
+    tomorrow.setDate(now.getDate());
+    tomorrow.setHours(0, 0, 0, 0);
+
     for (const task of tasks) {
       const expirationDate = new Date(task.expirationDate);
-      const timeDiff = expirationDate.getTime() - now.getTime();
-      //If there is one day left for the expiration
-      if (timeDiff <= 24 * 60 * 60 * 1000 && timeDiff > 23 * 60 * 60 * 1000) {
+      expirationDate.setHours(0, 0, 0, 0);
+
+      // Verify if the task expires tomorrow
+      if (expirationDate.getTime() === tomorrow.getTime()) {
         const users = await this.findUsersByTaskId(task.id);
         for (const user of users) {
-          await this.mailService.sendEmail(
-            'Impact Social Cup',
-            user.email,
-            'Notificacion de tarea',
-            `La tarea ${task.title} expira mañana a las ${expirationDate.getHours()}:${expirationDate.getMinutes()}`,
-            `<h1>La tarea ${task.title} expira mañana a las ${expirationDate.getHours()}:${expirationDate.getMinutes()}</h1>`,
-          );
+          try {
+            await this.mailService.sendEmail(
+              'Impact Social Cup',
+              user.email,
+              'Notificacion de tarea',
+              `La tarea ${task.title} ${task.description}expira mañana a las ${new Date(task.expirationDate).getHours()}:${new Date(task.expirationDate).getMinutes()}`,
+              `<h1>La tarea ${task.title} expira mañana a las ${new Date(task.expirationDate).getHours()}:${new Date(task.expirationDate).getMinutes()}</h1>`,
+            );
+          } catch (error) {
+            console.error('Error sending email:', error);
+          }
         }
       }
     }

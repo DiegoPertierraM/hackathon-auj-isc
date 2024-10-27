@@ -7,12 +7,12 @@ export class EmailService {
   private transporter;
   constructor(private configservice: ConfigService) {
     this.transporter = nodemailer.createTransport({
-      host: this.configservice.get('EMAIL_HOST'),
-      port: this.configservice.get('EMAIL_PORT'),
-      secure: this.configservice.get('EMAIL_SECURE'),
+      host: 'smtp.gmail.com',
+      port: 465, // Puerto SMTP seguro para Gmail
+      secure: true, // true para conexiones seguras
       auth: {
-        user: this.configservice.get('EMAIL_USER'),
-        pass: this.configservice.get('EMAIL_PASS'),
+        user: process.env.SMTP_USER, // tu correo
+        pass: process.env.SMTP_PASS, // tu contraseña o app password
       },
     });
   }
@@ -28,13 +28,10 @@ export class EmailService {
       from: '"Impact Social Cup"',
       to,
       subject,
-      text: `Email enviada da: ${from} \n\n${text}`,
+      text,
       html,
     };
-    try {
-      return await this.transporter.sendMail(mailOptions);
-    } catch (error) {
-      throw new Error(error);
-    }
+
+    return await this.transporter.sendMail(mailOptions);
   }
 }

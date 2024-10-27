@@ -3,6 +3,8 @@
   height: 100dvh;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  align-content: center;
+
   &__content {
     padding: 1rem 0rem;
     max-width: 400px;
@@ -46,10 +48,9 @@
   }
 
   &__bg {
-    background-image: url('images/impact-social-bg.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+    max-height: 100dvh;
+    height: 45rem;
+    border-radius: 0.4rem;
   }
   &__register-link {
     color: #7485d0;

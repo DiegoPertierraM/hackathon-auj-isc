@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   ForbiddenException,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -35,7 +36,11 @@ export class UserController {
     if (!user) {
       throw new ForbiddenException('Token invalid');
     }
-    return { token: await this.tokenService.createToken(user) };
+    return {
+      token: await this.tokenService.createToken(user),
+      userId: user.id,
+      userEmail: user.email,
+    };
   }
 
   @Post('/login')
@@ -53,7 +58,12 @@ export class UserController {
     if (!isPasswordValid) {
       throw new ForbiddenException('Email or password invalid');
     }
-    return { token: await this.tokenService.createToken(user) };
+    return {
+      token: await this.tokenService.createToken(user),
+      userId: user.id,
+      username: user.name,
+      userEmail: user.email,
+    };
   }
   @UseGuards(LoggerGuard)
   @Get()
@@ -69,7 +79,7 @@ export class UserController {
 
   @UseGuards(LoggerGuard)
   @Get(':id')
-  findOne(@Param('id') id: number) {
+  findOne(@Param('id', ParseIntPipe) id: number) {
     return this.userService.findOne(id);
   }
 
@@ -80,15 +90,15 @@ export class UserController {
   }
   @UseGuards(LoggerGuard)
   @Delete(':id')
-  remove(@Param('id') id: number) {
+  remove(@Param('id', ParseIntPipe) id: number) {
     return this.userService.remove(id);
   }
 
   @UseGuards(LoggerGuard)
-  @Post(':userId/tasks')
+  @Post(':userId/task/:taskId')
   async addTaskToUser(
-    @Param('userId') userId: number,
-    @Body('taskId') taskId: number,
+    @Param('userId', ParseIntPipe) userId: number,
+    @Param('taskId', ParseIntPipe) taskId: number,
   ) {
     return this.userService.addTaskToUser(userId, taskId);
   }
