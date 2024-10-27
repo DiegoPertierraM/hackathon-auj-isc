@@ -5,7 +5,12 @@ import { getCollaborators, getError, getLoading } from '../../store/collaborator
 import './collaborator.scss';
 import { useEffect } from 'react';
 import { AppDispatch } from '../../store/store';
-import { fetchCollaborators } from '../../store/collaborators/collaboratorsThunk';
+import {
+  createCollaborator,
+  deleteCollaborator,
+  fetchCollaborators,
+  updateCollaborator
+} from '../../store/collaborators/collaboratorsThunk';
 
 export const CollaboratorsPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -17,6 +22,32 @@ export const CollaboratorsPage = () => {
     dispatch(fetchCollaborators());
   }, [dispatch]);
 
+  const handleCreate = () => {
+    dispatch(
+      createCollaborator({
+        name: 'New Collaborator',
+        email: 'new@example.com',
+        phone: '123-456-7890',
+        company: 'NewCo'
+      })
+    );
+  };
+
+  const handleUpdate = (collaboratorId: number) => {
+    const updatedCollaborator = {
+      id: collaboratorId,
+      name: 'Updated Name',
+      email: 'updated@example.com',
+      phone: '987-654-3210',
+      company: 'UpdatedCo'
+    };
+    dispatch(updateCollaborator(updatedCollaborator));
+  };
+
+  const handleDelete = (collaboratorId: number) => {
+    dispatch(deleteCollaborator(collaboratorId));
+  };
+
   if (loading === 'loading') return <p>Loading collaborators...</p>;
   if (error) return <p>Error: {error}</p>;
 
@@ -27,8 +58,8 @@ export const CollaboratorsPage = () => {
       <div className="collaborators__header">
         <InputSearch />
 
-        <button className="button">
-          <IoAddOutline size={20} /> Añadir colaborador
+        <button className="button" onClick={() => handleCreate()}>
+          <IoAddOutline size={20} role="button" tabIndex={0} /> Añadir colaborador
         </button>
       </div>
 
@@ -50,7 +81,8 @@ export const CollaboratorsPage = () => {
               <td className="table__data">{collaborator.phone}</td>
               <td className="table__data">{collaborator.company}</td>
               <td className="table__data table__data--actions">
-                <IoPencilOutline /> <IoTrashBinOutline />
+                <IoPencilOutline onClick={() => handleUpdate(collaborator.id)} role="button" tabIndex={0} />{' '}
+                <IoTrashBinOutline onClick={() => handleDelete(collaborator.id)} role="button" tabIndex={0} />
               </td>
             </tr>
           ))}

@@ -20,6 +20,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.2rem;
+  cursor: pointer;
 }
 
 .table {
@@ -47,6 +48,7 @@
       display: flex;
       gap: 1rem;
       justify-content: center;
+      cursor: pointer;
     }
     &--name {
       max-width: 15ch;
