@@ -1,10 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Collaborator } from '../../interfaces/Collaborator.interface.ts';
 import { RootState } from '../store';
-import { fetchCollaborators } from './collaboratorsThunk.ts';
+import {
+  fetchCollaborators,
+  createCollaborator,
+  updateCollaborator,
+  deleteCollaborator
+} from './collaboratorsThunk.ts';
 
 interface CollaboratorState {
-  collaborators: Collaborator[] | null;
+  collaborators: Collaborator[];
   loading: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
 }
@@ -31,6 +36,18 @@ export const collaboratorsSlice = createSlice({
     builder.addCase(fetchCollaborators.rejected, (state, action) => {
       state.loading = 'failed';
       state.error = action.error.message || 'Failed to load collaborators';
+    });
+    builder.addCase(createCollaborator.fulfilled, (state, action) => {
+      state.collaborators.push(action.payload);
+    });
+    builder.addCase(updateCollaborator.fulfilled, (state, action) => {
+      const index = state.collaborators.findIndex(c => c.id === action.payload.id);
+      if (index !== -1) {
+        state.collaborators[index] = action.payload;
+      }
+    });
+    builder.addCase(deleteCollaborator.fulfilled, (state, action) => {
+      state.collaborators = state.collaborators.filter(c => c.id !== action.payload);
     });
   }
 });
