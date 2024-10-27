@@ -1,8 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
 import { FormInput } from '../../../components';
 import { Register, registerSchema } from '../login/logiSchema';
-import { Link, useNavigate } from 'react-router-dom';
 
 export const RegisterPage = () => {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ export const RegisterPage = () => {
   };
 
   return (
-    <section className="login">
+    <section className="login wrapper">
       <div className="login__content">
         <img className="login__logo" src="/images/auth-logo.png" alt="" />
 
@@ -64,7 +64,7 @@ export const RegisterPage = () => {
         </form>
       </div>
 
-      <div className="login__bg">{/* <img src="/images/impact-social-bg.png" alt="" /> */}</div>
+      <img className="login__bg" src="/images/impact-social-bg.png" alt="" />
     </section>
   );
 };

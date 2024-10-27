@@ -3,7 +3,11 @@
 body {
   background-color: var(--bg-color);
 }
-
+.wrapper {
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+}
 .title {
   font-size: clamp(1em, 2.5vw, 1.3em);
   font-weight: 600;

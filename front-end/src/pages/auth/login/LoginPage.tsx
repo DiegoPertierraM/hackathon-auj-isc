@@ -1,13 +1,18 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import { FormInput } from '../../../components';
+import { getLoading } from '../../../store/auth/authSlice';
+import { loginThunk } from '../../../store/auth/authThunk';
+import { AppDispatch } from '../../../store/store';
 import './login.scss';
 import { Login, loginSchema } from './logiSchema';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 
 export const LoginPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  const isLoading = useSelector(getLoading);
   const {
     register,
     handleSubmit,
@@ -16,12 +21,15 @@ export const LoginPage = () => {
     resolver: zodResolver(loginSchema)
   });
 
-  const onHandleSubmit: SubmitHandler<Login> = data => {
-    console.log(data);
+  const onHandleSubmit: SubmitHandler<Login> = async data => {
+    const { email, password } = data;
+
+    await dispatch(loginThunk({ email, password }));
     navigate('/');
   };
+
   return (
-    <section className="login">
+    <section className="login wrapper">
       <div className="login__content">
         <img className="login__logo" src="/images/auth-logo.png" alt="" />
 
@@ -47,10 +55,10 @@ export const LoginPage = () => {
           <p className="login__forgot-password">¿Olvidaste tu contraseña?</p>
 
           <button className="login__form-btn" type="submit">
-            Iniciar sesión
+            {isLoading ? 'Cargando...' : 'Iniciar sesión'}
           </button>
           <p className="login__link-register">
-            ¿No tienes cuenta?{' '}
+            ¿No tienes cuenta?
             <Link to="/auth/register" className="login__register-link">
               Regístrate
             </Link>
@@ -58,7 +66,7 @@ export const LoginPage = () => {
         </form>
       </div>
 
-      <div className="login__bg">{/* <img src="/images/impact-social-bg.png" alt="" /> */}</div>
+      <img className="login__bg" src="/images/impact-social-bg.png" alt="" />
     </section>
   );
 };
