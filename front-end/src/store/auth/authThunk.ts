@@ -7,22 +7,12 @@ interface LoginThunkArg {
   password: string;
 }
 
-const user: User = {
-  id: 1,
-  name: 'test',
-  password: 'test1',
-  email: 'test@test.com',
-  phone: '123123123',
-  tasks: [],
-  created: 'a',
-  updated: 'b'
-};
 export const loginThunk = createAsyncThunk<User, LoginThunkArg, { rejectValue: string }>(
   'auth/login',
   async ({ email, password }: LoginThunkArg, { rejectWithValue }) => {
     const baseUrl = import.meta.env.VITE_API_URL;
     try {
-      const response = await fetch(`${baseUrl}/login`, {
+      const response = await fetch(`${baseUrl}/user/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -36,11 +26,9 @@ export const loginThunk = createAsyncThunk<User, LoginThunkArg, { rejectValue: s
 
       const data = await response.json();
 
-      console.log({ data });
-      saveUserData(user);
-      return user;
+      saveUserData(data);
+      return data;
     } catch (error) {
-      saveUserData(user);
       return rejectWithValue('Error en la petición');
     }
   }

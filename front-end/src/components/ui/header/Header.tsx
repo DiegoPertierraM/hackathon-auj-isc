@@ -1,6 +1,8 @@
 import './header.scss';
 
 export const Header = () => {
+  // const userData = useSelector(getUserData);
+
   return (
     <header className="header">
       <div className="avatar">

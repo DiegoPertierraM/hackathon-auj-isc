@@ -1,12 +1,14 @@
 import { User } from '../interfaces/User.interface';
 
 export const saveUserData = (userData: User) => {
-  console.log({ userData });
-  localStorage.setItem('userData', JSON.stringify(userData));
+  const { token, ...restData } = userData;
+  localStorage.setItem('userData', JSON.stringify(restData));
+  localStorage.setItem('token', JSON.stringify(token));
 };
 
 export const removeUserData = () => {
   localStorage.removeItem('userData');
+  localStorage.removeItem('token');
 };
 
 export const getUserData = (): User | null => {
