@@ -1,7 +1,8 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
-import { participantsSlice } from './participants/participantsSlice';
+import { authSlice } from './auth/authSlice';
 import { collaboratorsSlice } from './collaborators/collaboratorsSlice';
 import { opportunitiesSlice } from './opportunities/opportunitiesSlice';
+import { participantsSlice } from './participants/participantsSlice';
 import { tasksSlice } from './tasks/tasksSlice';
 
 export const store = configureStore({
@@ -9,7 +10,8 @@ export const store = configureStore({
     collaborators: collaboratorsSlice.reducer,
     participants: participantsSlice.reducer,
     opportunities: opportunitiesSlice.reducer,
-    tasks: tasksSlice.reducer
+    tasks: tasksSlice.reducer,
+    auth: authSlice.reducer
   }
 });
 
