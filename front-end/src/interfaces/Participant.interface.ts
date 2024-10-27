@@ -2,6 +2,7 @@ export interface Participant {
   id: number;
   name: string;
   email: string;
-  phone: string;
-  tickets: number;
+  ticket: number;
+  created: Date;
+  updated: Date;
 }
