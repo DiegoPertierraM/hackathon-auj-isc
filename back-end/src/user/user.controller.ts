@@ -61,6 +61,7 @@ export class UserController {
     return {
       token: await this.tokenService.createToken(user),
       userId: user.id,
+      username: user.name,
       userEmail: user.email,
     };
   }

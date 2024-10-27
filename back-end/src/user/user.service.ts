@@ -43,7 +43,7 @@ export class UserService {
   async findForLogin(email: string): Promise<SignUser | null> {
     return await this.service.user.findUnique({
       where: { email },
-      select: { id: true, email: true, password: true },
+      select: { id: true, email: true, name: true, password: true },
     });
   }
 

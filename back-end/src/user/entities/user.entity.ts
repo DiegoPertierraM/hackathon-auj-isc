@@ -10,5 +10,6 @@ export class User {
 export class SignUser {
   id: number;
   email: string;
+  name: string;
   password: string;
 }
