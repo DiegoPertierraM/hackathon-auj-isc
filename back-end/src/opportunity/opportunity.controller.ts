@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { OpportunityService } from './opportunity.service';
 import { CreateOpportunityDto } from './dto/create-opportunity.dto';
@@ -31,7 +32,7 @@ export class OpportunityController {
 
   @UseGuards(LoggerGuard)
   @Get(':id')
-  findOne(@Param('id') id: number) {
+  findOne(@Param('id', ParseIntPipe) id: number) {
     return this.opportunityService.findOne(id);
   }
 
@@ -45,7 +46,7 @@ export class OpportunityController {
   }
   @UseGuards(LoggerGuard)
   @Delete(':id')
-  remove(@Param('id') id: number) {
+  remove(@Param('id', ParseIntPipe) id: number) {
     return this.opportunityService.remove(id);
   }
 }
