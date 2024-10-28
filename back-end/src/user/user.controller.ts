@@ -14,7 +14,7 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { LoggerGuard } from '../core/guard/logger.guard';
-import { TokenService } from 'src/core/token/token.service';
+import { TokenService } from '../core/token/token.service';
 import * as bcrypt from 'bcryptjs';
 
 @Controller('user')

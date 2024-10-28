@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { OpportunityService } from './opportunity.service';
 import { OpportunityController } from './opportunity.controller';
 import { PrismaService } from '../prisma/prisma.service';
-import { CoreModule } from 'src/core/core.module';
+import { CoreModule } from '../core/core.module';
 
 @Module({
   imports: [CoreModule],
