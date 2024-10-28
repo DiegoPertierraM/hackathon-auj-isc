@@ -4,9 +4,10 @@ import { TaskController } from './task.controller';
 import { PrismaService } from '../prisma/prisma.service';
 import { CoreModule } from '../core/core.module';
 import { EmailService } from '../email/email.service';
+import { PrismaModule } from 'src/prisma/prisma.module';
 
 @Module({
-  imports: [CoreModule],
+  imports: [PrismaModule, CoreModule],
   controllers: [TaskController],
   providers: [TaskService, PrismaService, EmailService],
 })
