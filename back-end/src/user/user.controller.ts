@@ -85,7 +85,10 @@ export class UserController {
 
   @UseGuards(LoggerGuard)
   @Patch(':id')
-  update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
     return this.userService.update(id, updateUserDto);
   }
   @UseGuards(LoggerGuard)
