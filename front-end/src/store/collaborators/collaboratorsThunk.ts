@@ -2,7 +2,10 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Collaborator } from '../../interfaces/Collaborator.interface';
 
 const baseUrl = import.meta.env.VITE_API_URL;
-const token = localStorage.getItem('token')!.replace(/['"]/g, '');
+let token = localStorage.getItem('token');
+if (token) {
+  token = token.replace(/['"]/g, '');
+}
 
 export const fetchCollaborators = createAsyncThunk('collaborators/fetchCollaborators', async () => {
   try {
