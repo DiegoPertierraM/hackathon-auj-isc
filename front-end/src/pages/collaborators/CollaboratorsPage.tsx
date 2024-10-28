@@ -48,7 +48,7 @@ export const CollaboratorsPage = () => {
     dispatch(deleteCollaborator(collaboratorId));
   };
 
-  if (loading === 'loading') return <p>Loading collaborators...</p>;
+  if (loading === 'loading') return <p>Cargando colaboradores...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
