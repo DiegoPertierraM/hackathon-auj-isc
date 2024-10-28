@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { CollaboratorsService } from './collaborators.service';
 import { CollaboratorsController } from './collaborators.controller';
 import { PrismaService } from '../prisma/prisma.service';
-import { CoreModule } from 'src/core/core.module';
+import { CoreModule } from '../core/core.module';
 
 @Module({
   imports: [CoreModule],

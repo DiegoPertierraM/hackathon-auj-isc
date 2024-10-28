@@ -6,10 +6,10 @@ import {
 } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { Task } from './entities/task.entity';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { EmailService } from 'src/email/email.service';
+import { EmailService } from '../email/email.service';
 
 @Injectable()
 export class TaskService {
