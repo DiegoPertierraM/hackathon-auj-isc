@@ -1,11 +1,14 @@
 import { IoLogOutOutline } from 'react-icons/io5';
-import { useDispatch } from 'react-redux';
-import { onLogout } from '../../../store/auth/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserData, onLogout } from '../../../store/auth/authSlice';
 import { removeUserData } from '../../../utils/userDataStore';
 import './header.scss';
+import { AppDispatch } from '../../../store/store';
 
 export const Header = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
+  const userData = useSelector(getUserData);
+
   const logout = () => {
     console.log('log');
     dispatch(onLogout());
@@ -34,7 +37,7 @@ export const Header = () => {
         </svg>
 
         <span className="avatar__name">
-          Pepe Martinez <span className="avatar__email">pepe22@gmail.com</span>
+          {userData?.username} <span className="avatar__email">{userData?.userEmail}</span>
         </span>
       </div>
     </header>

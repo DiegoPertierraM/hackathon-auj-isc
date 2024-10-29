@@ -9,10 +9,11 @@
 
 .avatar {
   margin-left: auto;
-  width: 9.5rem;
+  max-width: 11.5rem;
   display: flex;
   align-items: center;
   gap: 0.4rem;
+
   &__name {
     font-size: 0.75rem;
     color: var(--primary-color);
