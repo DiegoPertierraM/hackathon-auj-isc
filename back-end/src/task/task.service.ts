@@ -177,4 +177,29 @@ export class TaskService {
       }
     }
   }
+
+  @Cron(CronExpression.EVERY_HOUR)
+  async checkNotificacion() {
+    const tasks = await this.findAll();
+    const now = new Date();
+    for (const task of tasks) {
+      const taskDate = new Date(task.notification);
+      if (taskDate.toDateString === now.toDateString) {
+        const users = await this.findUsersByTaskId(task.id);
+        for (const user of users) {
+          try {
+            await this.mailService.sendEmail(
+              'Impact Social Cup',
+              user.email,
+              'Notificacion de tarea',
+              `La tarea ${task.title} tiene lugar ${taskDate.getDate()} a las ${taskDate.getHours()}:${taskDate.getMinutes()}`,
+              `<h1>La tarea ${task.title} tiene lugar ${taskDate.getDate()} a las ${taskDate.getHours()}:${taskDate.getMinutes()}</h1>`,
+            );
+          } catch (error) {
+            console.error('Error sending email:', error);
+          }
+        }
+      }
+    }
+  }
 }
