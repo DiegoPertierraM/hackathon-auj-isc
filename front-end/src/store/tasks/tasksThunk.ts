@@ -33,20 +33,25 @@ export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
   }
 });
 
-export const createTask = createAsyncThunk('tasks/createTask', async (newTask: Omit<Task, 'id'>) => {
-  const token = localStorage.getItem('token')?.replace(/['"]/g, '');
+export const createTask = createAsyncThunk(
+  'tasks/createTask',
+  async (newTask: Omit<Task, 'id'>): Promise<Task> => {
+    const token = localStorage.getItem('token')?.replace(/['"]/g, '');
 
-  const response = await fetch(`${baseUrl}task`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify(newTask)
-  });
-  console.log(await response.json());
-  return (await response.json()) as Task;
-});
+    console.log({ newTask });
+
+    const response = await fetch(`${baseUrl}task`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(newTask)
+    });
+    const data = await response.json();
+    return data;
+  }
+);
 
 export const updateTask = createAsyncThunk('tasks/updateTask', async (updatedTask: Task) => {
   const token = localStorage.getItem('token')?.replace(/['"]/g, '');

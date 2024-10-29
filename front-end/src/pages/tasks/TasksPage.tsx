@@ -5,7 +5,6 @@ import { NavLink } from 'react-router-dom';
 import { InputSearch, Skleton, Title } from '../../components';
 import { TaskFormModal } from '../../components/specific-modals/TaskFormModal/taskFormModal';
 import { Task, TaskFormData } from '../../interfaces/Task.interface';
-import { UserData } from '../../interfaces/User.interface';
 import { AppDispatch } from '../../store/store';
 import { getError, getLoading, getTasks } from '../../store/tasks/tasksSlice';
 import { createTask, deleteTask, fetchTasks, updateTask } from '../../store/tasks/tasksThunk';
@@ -23,7 +22,6 @@ export const TasksPage = () => {
     taskDate: '',
     notification: '',
     expirationDate: '',
-    user: [] as UserData[],
     description: ''
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -65,7 +63,7 @@ export const TasksPage = () => {
 
   const handleCancel = () => {
     setEditingId(null);
-    setEditedTask({ title: '', taskDate: '', notification: '', expirationDate: '', user: [], description: '' });
+    setEditedTask({ title: '', taskDate: '', notification: '', expirationDate: '', description: '' });
   };
 
   const handleDelete = (taskId: number) => {
