@@ -6,6 +6,7 @@ export class User {
   phone?: string;
   created: Date;
   updated: Date;
+  UserTasks: { userId: number; taskId: number }[];
 }
 export class SignUser {
   id: number;

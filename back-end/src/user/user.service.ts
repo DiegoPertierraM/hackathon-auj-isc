@@ -21,12 +21,17 @@ export class UserService {
   async create(createUserDto: CreateUserDto): Promise<User> {
     try {
       const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
-      return await this.service.user.create({
+      const newUser = await this.service.user.create({
         data: {
           ...createUserDto,
           password: hashedPassword,
         },
       });
+
+      return {
+        ...newUser,
+        UserTasks: [],
+      };
     } catch (error) {
       throw new InternalServerErrorException('Server Error');
     }
@@ -34,7 +39,15 @@ export class UserService {
 
   async findAll(): Promise<User[]> {
     try {
-      return await this.service.user.findMany();
+      const users = await this.service.user.findMany();
+      return await Promise.all(
+        users.map(async (user) => ({
+          ...user,
+          UserTasks: await this.service.userTask.findMany({
+            where: { userId: user.id },
+          }),
+        })),
+      );
     } catch (error) {
       throw new InternalServerErrorException('Server Error');
     }
@@ -57,7 +70,12 @@ export class UserService {
         throw new NotFoundException(`User with ID ${id} not found`);
       }
 
-      return user;
+      return {
+        ...user,
+        UserTasks: await this.service.userTask.findMany({
+          where: { userId: user.id },
+        }),
+      };
     } catch (error) {
       if (error instanceof NotFoundException) {
         throw error;
@@ -68,10 +86,15 @@ export class UserService {
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     try {
-      return await this.service.user.update({
-        where: { id },
-        data: updateUserDto,
-      });
+      return {
+        ...(await this.service.user.update({
+          where: { id },
+          data: updateUserDto,
+        })),
+        UserTasks: await this.service.userTask.findMany({
+          where: { userId: id },
+        }),
+      };
     } catch (error) {
       if (error.code === 'P2025') {
         throw new NotFoundException(`User with ID ${id} not found`);
@@ -82,9 +105,15 @@ export class UserService {
 
   async remove(id: number): Promise<User> {
     try {
-      return await this.service.user.delete({
+      const deletedUser = await this.service.user.delete({
         where: { id },
       });
+      return {
+        ...deletedUser,
+        UserTasks: await this.service.userTask.findMany({
+          where: { userId: id },
+        }),
+      };
     } catch (error) {
       if (error.code === 'P2025') {
         throw new NotFoundException(`User with ID ${id} not found`);
