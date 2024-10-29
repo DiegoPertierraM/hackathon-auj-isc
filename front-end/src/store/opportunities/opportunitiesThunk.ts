@@ -108,7 +108,6 @@ export const updateOportinity = createAsyncThunk<Opportunity, UpdateOpportunityP
       }
 
       const data = await response.json();
-      console.log({ data });
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue('Error de red o del servidor');

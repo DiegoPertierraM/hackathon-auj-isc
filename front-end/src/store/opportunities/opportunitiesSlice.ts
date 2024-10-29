@@ -69,9 +69,8 @@ export const opportunitiesSlice = createSlice({
     });
     builder.addCase(updateOportinity.fulfilled, (state, action) => {
       state.loading = 'succeeded';
-      console.log('UPDATE', action.payload);
-
-      // state.opportunities = state.opportunities.filter(opportunity => opportunity.id !== action.payload.id);
+      const index = state.opportunities.findIndex(opportunity => opportunity.id === action.payload.id);
+      state.opportunities[index] = action.payload;
     });
     builder.addCase(updateOportinity.rejected, (state, action) => {
       state.loading = 'failed';
