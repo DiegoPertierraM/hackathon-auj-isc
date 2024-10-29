@@ -1,14 +1,15 @@
+import { useEffect, useState } from 'react';
 import { IoAddOutline, IoCloseOutline, IoPencilOutline, IoSaveOutline, IoTrashBinOutline } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
-import { InputSearch, Title } from '../../components';
-import { getError, getLoading, getTasks } from '../../store/tasks/tasksSlice';
-import './tasks.scss';
-import { AppDispatch } from '../../store/store';
-import { useEffect, useState } from 'react';
-import { createTask, deleteTask, fetchTasks, updateTask } from '../../store/tasks/tasksThunk';
-import { TaskFormData } from '../../interfaces/Task.interface';
+import { NavLink } from 'react-router-dom';
+import { InputSearch, Skleton, Title } from '../../components';
 import { TaskFormModal } from '../../components/specific-modals/TaskFormModal/taskFormModal';
+import { Task, TaskFormData } from '../../interfaces/Task.interface';
 import { UserData } from '../../interfaces/User.interface';
+import { AppDispatch } from '../../store/store';
+import { getError, getLoading, getTasks } from '../../store/tasks/tasksSlice';
+import { createTask, deleteTask, fetchTasks, updateTask } from '../../store/tasks/tasksThunk';
+import './tasks.scss';
 
 export const TasksPage = () => {
   const tasks = useSelector(getTasks);
@@ -26,6 +27,14 @@ export const TasksPage = () => {
     description: ''
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [search, setSearchTerm] = useState('');
+
+  const tasksFiltered = searchTasks(tasks, search);
+
+  const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
 
   useEffect(() => {
     dispatch(fetchTasks());
@@ -74,93 +83,121 @@ export const TasksPage = () => {
     }).format(date);
   };
 
-  if (loading === 'loading') return <p className="data-loading">Cargando tareas...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
     <section className="tasks section">
       <Title title="Tareas" />
 
-      <div className="tasks__header">
-        <InputSearch />
+      {loading === 'loading' ? (
+        <Skleton />
+      ) : (
+        <>
+          <div className="tasks__header">
+            <InputSearch onSearch={onSearch} placeHolder="Buscar nombre.." />
 
-        <button className="button" onClick={() => setIsModalOpen(true)}>
-          <IoAddOutline size={20} role="button" tabIndex={0} /> Añadir tarea
-        </button>
-      </div>
+            <button className="button" onClick={() => setIsModalOpen(true)}>
+              <IoAddOutline size={20} role="button" tabIndex={0} /> Añadir tarea
+            </button>
+          </div>
 
-      <TaskFormModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onAddTask={handleAddTask} />
+          <TaskFormModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onAddTask={handleAddTask} />
 
-      <table className="table">
-        <thead className="table__head">
-          <tr>
-            <th className="table__th">Título</th>
-            <th>Fecha</th>
-            <th>Notificación</th>
-            <th>Fecha de expiración</th>
-            <th className="table__th">Descripción</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tasks.map(task => (
-            <tr key={task.id} className="table__row">
-              <td className="table__data--name">
-                {editingId === task.id ? (
-                  <input type="text" name="title" value={editedTask.title} onChange={handleChange} />
-                ) : (
-                  task.title
-                )}
-              </td>
-              <td className="table__data">
-                {editingId === task.id ? (
-                  <input type="date" name="taskDate" value={editedTask.taskDate} onChange={handleChange} />
-                ) : (
-                  formatDateToSpanish(task.taskDate)
-                )}
-              </td>
-              <td className="table__data">
-                {editingId === task.id ? (
-                  <input type="date" name="notification" value={editedTask.notification} onChange={handleChange} />
-                ) : (
-                  formatDateToSpanish(task.notification)
-                )}
-              </td>
-              <td className="table__data">
-                {editingId === task.id ? (
-                  <input
-                    type="date"
-                    name="expirationDate"
-                    value={editedTask.expirationDate}
-                    onChange={handleChange}
-                  />
-                ) : (
-                  formatDateToSpanish(task.expirationDate)
-                )}
-              </td>
-              <td className="table__data--desc">
-                {editingId === task.id ? (
-                  <input type="text" name="description" value={editedTask.description} onChange={handleChange} />
-                ) : (
-                  task.description
-                )}
-              </td>
-              <td className="table__data table__data--actions">
-                {editingId === task.id ? (
-                  <>
-                    <IoSaveOutline onClick={handleSave} role="button" tabIndex={0} />
-                    <IoCloseOutline onClick={handleCancel} role="button" tabIndex={0} />
-                  </>
-                ) : (
-                  <>
-                    <IoPencilOutline onClick={() => handleEditClick(task)} role="button" tabIndex={0} />
-                    <IoTrashBinOutline onClick={() => handleDelete(task.id)} role="button" tabIndex={0} />
-                  </>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+          <table className="table">
+            <thead className="table__head">
+              <tr>
+                <th className="table__th">Título</th>
+                <th>Fecha</th>
+                <th>Notificación</th>
+                <th>Fecha de expiración</th>
+                <th className="table__th">Descripción</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tasksFiltered.map(task => (
+                <tr key={task.id} className="table__row">
+                  <td className="table__data--name">
+                    {editingId === task.id ? (
+                      <input type="text" name="title" value={editedTask.title} onChange={handleChange} />
+                    ) : (
+                      task.title
+                    )}
+                  </td>
+                  <td className="table__data">
+                    {editingId === task.id ? (
+                      <input type="date" name="taskDate" value={editedTask.taskDate} onChange={handleChange} />
+                    ) : (
+                      formatDateToSpanish(task.taskDate)
+                    )}
+                  </td>
+                  <td className="table__data">
+                    {editingId === task.id ? (
+                      <input
+                        type="date"
+                        name="notification"
+                        value={editedTask.notification}
+                        onChange={handleChange}
+                      />
+                    ) : (
+                      formatDateToSpanish(task.notification)
+                    )}
+                  </td>
+                  <td className="table__data">
+                    {editingId === task.id ? (
+                      <input
+                        type="date"
+                        name="expirationDate"
+                        value={editedTask.expirationDate}
+                        onChange={handleChange}
+                      />
+                    ) : (
+                      formatDateToSpanish(task.expirationDate)
+                    )}
+                  </td>
+                  <td className="table__data--desc">
+                    {editingId === task.id ? (
+                      <input
+                        type="text"
+                        name="description"
+                        value={editedTask.description}
+                        onChange={handleChange}
+                      />
+                    ) : (
+                      task.description
+                    )}
+                  </td>
+                  <td className="table__data table__data--actions">
+                    {editingId === task.id ? (
+                      <>
+                        <IoSaveOutline onClick={handleSave} role="button" tabIndex={0} />
+                        <IoCloseOutline onClick={handleCancel} role="button" tabIndex={0} />
+                      </>
+                    ) : (
+                      <>
+                        <IoPencilOutline onClick={() => handleEditClick(task)} role="button" tabIndex={0} />
+                        <IoTrashBinOutline onClick={() => handleDelete(task.id)} role="button" tabIndex={0} />
+
+                        <NavLink to={`/tasks-add-user/${task.id}`}>
+                          <IoAddOutline size={20} role="button" tabIndex={0} />
+                        </NavLink>
+                      </>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
     </section>
   );
+};
+
+const searchTasks = (tasks: Task[], search: string) => {
+  if (!search) return tasks;
+
+  const searchLower = search.toLowerCase();
+
+  const taskFiltered = tasks.filter(task => task.title.toLowerCase().includes(searchLower));
+  return taskFiltered;
 };

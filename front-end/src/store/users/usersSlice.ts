@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { UserData } from '../../interfaces/User.interface';
 import { RootState } from '../store';
-import { fetchUsers } from './usersThunk';
+import { addTaskToUser, fetchUsers } from './usersThunk';
 
 interface userState {
   users: UserData[];
@@ -29,6 +29,18 @@ export const usersSlice = createSlice({
       state.users = action.payload;
     });
     builder.addCase(fetchUsers.rejected, (state, action) => {
+      state.loading = 'failed';
+      state.error = action.error.message || 'Failed to load users';
+    });
+
+    builder.addCase(addTaskToUser.pending, state => {
+      state.loading = 'loading';
+      state.error = null;
+    });
+    builder.addCase(addTaskToUser.fulfilled, state => {
+      state.loading = 'succeeded';
+    });
+    builder.addCase(addTaskToUser.rejected, (state, action) => {
       state.loading = 'failed';
       state.error = action.error.message || 'Failed to load users';
     });
