@@ -114,6 +114,18 @@ export class UserService {
 
     return taskToUser;
   }
+
+  // remove task to user
+  async removeTaskToUser(userId: number, taskId: number) {
+    return await this.service.userTask.delete({
+      where: {
+        userId_taskId: {
+          userId,
+          taskId,
+        },
+      },
+    });
+  }
   //passwrod recovery
   async passwordRecovery(email: string) {
     const user = await this.findForLogin(email);

@@ -8,60 +8,62 @@ Marked with (\*) need token
 
 ```http
 http://localhost:3000/user/
-GET   - .../              Fetch all user (*)
-GET   - .../{id}          Fetch user by ID (*)
-GET   - .../email/{email} Filter user by email (*)
-GET   - .../login         If user have token grant access (*)
-POST  - .../login         Authenticacion with email, password in the body request
-POST  - .../              With User model in body create a user (*)
-PATCH - .../{id}          With User info in body use to update user data (*)
-DELETE- .../{id}          Delete user by ID (*)
+GET   - .../                        Fetch all user (*)
+GET   - .../{id}                    Fetch user by ID (*)
+GET   - .../email/{email}           Filter user by email (*)
+GET   - .../login                   If user have token grant access (*)
+POST  - .../login                   Authenticacion with email, password in the body request
+POST  - .../                        With User model in body create a user (*)
+POST  - .../{user.id}/task/{task.id}Add a task to an User(*)
+PATCH - .../{id}                    With User info in body use to update user data (*)
+DELETE- .../{id}                    Delete user by ID (*)
+DELETE- .../{User.id}/task/{Task.id}Delete a task to an User (*)
 ```
 
 ### PARTICIPANT:
 
 ```http
 http://localhost:3000/participant/
-GET   - .../              Fetch all participant (*)
-GET   - .../{id}          Fetch participant by ID (*)
-POST  - .../              With Participant model in body create participant (*)
-PATCH - .../{id}          With Participant info in body use to update participant data (*)
-DELETE- .../{id}          Delete participant by ID (*)
+GET   - .../                        Fetch all participant (*)
+GET   - .../{id}                    Fetch participant by ID (*)
+POST  - .../                        With Participant model in body create participant (*)
+PATCH - .../{id}                    With Participant info in body use to update participant data (*)
+DELETE- .../{id}                    Delete participant by ID (*)
 ```
 
 ### TASK
 
 ```http
 http://localhost:3000/task/
-GET    - .../                   Fetch all tasks (*)
-GET    - .../{id}               Fetch task by ID (*)
-GET    - .../{taskId}/users     Filter users by task id (*)
-GET    - .../{userId}/tasks     Filter tasks by user id (*)
-POST   - .../                   With Task model in body create task (*)
-PATCH  - .../{id}               With Task info in body use to update task data (*)
-DELETE - .../{id}               Delete task by ID (*)
+GET    - .../                      Fetch all tasks (*)
+GET    - .../{id}                  Fetch task by ID (*)
+GET    - .../{taskId}/users        Filter users by task id (*)
+GET    - .../{userId}/tasks        Filter tasks by user id (*)
+POST   - .../                      With Task model in body create task (*)
+PATCH  - .../{id}                  With Task info in body use to update task data (*)
+DELETE - .../{id}                  Delete task by ID (*)
 ```
 
 ### OPPORTUNITY
 
 ```http
 http://localhost:3000/opportunity/
-GET   - .../              Fetch all opportunity (*)
-GET   - .../{id}          Fetch opportunity by ID (*)
-POST  - .../              With opportunity model in body create opportunity (*)
-PATCH - .../{id}          With opportunity info in body use to update opportunity data(*)
-DELETE- .../{id}          Delete opportunity by ID (*)
+GET   - .../                      Fetch all opportunity (*)
+GET   - .../{id}                  Fetch opportunity by ID (*)
+POST  - .../                      With opportunity model in body create opportunity (*)
+PATCH - .../{id}                  With opportunity info in body use to update opportunity data(*)
+DELETE- .../{id}                  Delete opportunity by ID (*)
 ```
 
 ### COLLABORATORS
 
 ```http
 http://localhost:3000/collaborators/
-GET   - .../              Fetch all collaborators (*)
-GET   - .../{id}          Fetch collaborator by ID (*)
-POST  - .../              With collaborators model in body create collaborator (*)
-PATCH - .../{id}          With collaborators info in body use to update collaborator data (*)
-DELETE- .../{id}          Delete collaborator by ID (*)
+GET   - .../                      Fetch all collaborators (*)
+GET   - .../{id}                  Fetch collaborator by ID (*)
+POST  - .../                      With collaborators model in body create collaborator (*)
+PATCH - .../{id}                  With collaborators info in body use to update collaborator data (*)
+DELETE- .../{id}                  Delete collaborator by ID (*)
 ```
 
 ## Project setup
