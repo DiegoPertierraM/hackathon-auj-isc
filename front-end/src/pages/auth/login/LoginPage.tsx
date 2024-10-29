@@ -18,11 +18,7 @@ export const LoginPage = () => {
     handleSubmit,
     formState: { errors }
   } = useForm<Login>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: 'quintiliani.d@gmail.com',
-      password: 'hacketon'
-    }
+    resolver: zodResolver(loginSchema)
   });
 
   const onHandleSubmit: SubmitHandler<Login> = async data => {
