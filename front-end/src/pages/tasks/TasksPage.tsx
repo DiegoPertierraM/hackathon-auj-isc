@@ -59,6 +59,15 @@ export const TasksPage = () => {
     dispatch(deleteTask(taskId));
   };
 
+  const formatDateToSpanish = (isoDateString: string) => {
+    const date = new Date(isoDateString);
+    return new Intl.DateTimeFormat('es-ES', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    }).format(date);
+  };
+
   if (loading === 'loading') return <p className="data-loading">Cargando tareas...</p>;
   if (error) return <p>Error: {error}</p>;
 
@@ -100,14 +109,14 @@ export const TasksPage = () => {
                 {editingId === task.id ? (
                   <input type="date" name="taskDate" value={editedTask.taskDate} onChange={handleChange} />
                 ) : (
-                  task.taskDate
+                  formatDateToSpanish(task.taskDate)
                 )}
               </td>
               <td className="table__data">
                 {editingId === task.id ? (
                   <input type="date" name="notification" value={editedTask.notification} onChange={handleChange} />
                 ) : (
-                  task.notification
+                  formatDateToSpanish(task.notification)
                 )}
               </td>
               <td className="table__data">
@@ -119,7 +128,7 @@ export const TasksPage = () => {
                     onChange={handleChange}
                   />
                 ) : (
-                  task.expirationDate
+                  formatDateToSpanish(task.expirationDate)
                 )}
               </td>
               <td className="table__data--desc">
