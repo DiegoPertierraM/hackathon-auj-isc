@@ -164,7 +164,7 @@ export const CollaboratorsPage = () => {
               ))}
             </tbody>
           </table>
-          {!filteredCollaborators.length && <span>No se econtrarón resultados 😅</span>}
+          {!filteredCollaborators.length && <span>No se encontraron resultados 😅</span>}
         </>
       )}
     </section>

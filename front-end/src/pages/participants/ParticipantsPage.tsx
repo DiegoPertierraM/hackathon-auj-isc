@@ -26,6 +26,8 @@ export const ParticipantsPage = () => {
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
+
+  const filteredParticipants = searchParticipant(participants, searchTerm);
   const onDelete = async (id: number) => {
     await dispatch(deleteParticipant(id));
   };
@@ -139,6 +141,7 @@ export const ParticipantsPage = () => {
             </tbody>
           </table>
           <ParticipantsModal isOpen={isModalOpen} onClose={() => setIsModalOpen(!isModalOpen)} />
+          {!filteredParticipants.length && <span>No se encontraron resultados 😅</span>}
         </>
       )}
     </section>
