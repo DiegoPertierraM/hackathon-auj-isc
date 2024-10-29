@@ -1,24 +1,25 @@
+import { useEffect, useState } from 'react';
 import { IoAddOutline, IoCloseOutline, IoPencilOutline, IoSaveOutline, IoTrashBinOutline } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import { InputSearch, Title } from '../../components';
+import { CollaboratorFormModal } from '../../components/specific-modals/CollaboratorFormModal/CollaboratorFormModal';
+import { Collaborator, CollaboratorFormData } from '../../interfaces/Collaborator.interface';
 import { getCollaborators, getError, getLoading } from '../../store/collaborators/collaboratorsSlice';
-import './collaborator.scss';
-import { useEffect, useState } from 'react';
-import { AppDispatch } from '../../store/store';
 import {
   createCollaborator,
   deleteCollaborator,
   fetchCollaborators,
   updateCollaborator
 } from '../../store/collaborators/collaboratorsThunk';
-import { CollaboratorFormModal } from '../../components/specific-modals/CollaboratorFormModal/CollaboratorFormModal';
-import { CollaboratorFormData } from '../../interfaces/Collaborator.interface';
+import { AppDispatch } from '../../store/store';
+import './collaborator.scss';
 
 export const CollaboratorsPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const collaborators = useSelector(getCollaborators);
   const loading = useSelector(getLoading);
   const error = useSelector(getError);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editedCollaborator, setEditedCollaborator] = useState({
@@ -29,9 +30,15 @@ export const CollaboratorsPage = () => {
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const filteredCollaborators = searchCollaborators(collaborators, searchTerm);
+
   useEffect(() => {
     dispatch(fetchCollaborators());
   }, [dispatch]);
+
+  const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
 
   const handleAddCollaborator = (collaboratorData: CollaboratorFormData) => {
     dispatch(createCollaborator(collaboratorData));
@@ -71,7 +78,7 @@ export const CollaboratorsPage = () => {
       <Title title="Colaboradores" />
 
       <div className="collaborators__header">
-        <InputSearch />
+        <InputSearch onSearch={onSearch} />
 
         <button className="button" onClick={() => setIsModalOpen(true)}>
           <IoAddOutline size={20} role="button" tabIndex={0} /> Añadir colaborador
@@ -95,7 +102,7 @@ export const CollaboratorsPage = () => {
           </tr>
         </thead>
         <tbody>
-          {collaborators!.map(collaborator => (
+          {filteredCollaborators.map(collaborator => (
             <tr key={collaborator.id} className="table__row">
               <td className="table__data--name">
                 {editingId === collaborator.id ? (
@@ -140,8 +147,21 @@ export const CollaboratorsPage = () => {
               </td>
             </tr>
           ))}
+
+          {!filteredCollaborators.length && <span>No se econtrarón resultados 😅</span>}
         </tbody>
       </table>
     </section>
   );
+};
+
+const searchCollaborators = (collaborators: Collaborator[], search: string) => {
+  if (!search) return collaborators;
+
+  const searchLower = search.toLowerCase();
+
+  const filteredCollaborators = collaborators.filter(collaborator =>
+    collaborator.name.toLocaleLowerCase().includes(searchLower)
+  );
+  return filteredCollaborators;
 };
