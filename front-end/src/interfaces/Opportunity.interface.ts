@@ -1,10 +1,17 @@
 export interface Opportunity {
   id: number;
+  title: string;
   name: string;
-  email: string;
-  phone: string;
+  description: string;
+
   status: Status;
-  company: string;
 }
 
-export type Status = 'Nuevo' | 'En proceso' | 'Cerrado';
+export interface OpportunityCreate {
+  title: string;
+  name: string;
+  description: string;
+  status: Status;
+}
+
+export type Status = 'new' | 'inProgress' | 'closed';
