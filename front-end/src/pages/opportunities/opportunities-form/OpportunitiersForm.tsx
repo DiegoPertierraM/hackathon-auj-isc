@@ -46,7 +46,7 @@ export const OpportunitiersForm = () => {
   }, [opportunities, reset]);
   return (
     <section className="form-opp section">
-      <button className="modal__close" onClick={onBack}>
+      <button onClick={onBack}>
         <IoArrowBackOutline size={30} />
       </button>
       <form className="form" onSubmit={handleSubmit(opportunities ? onEdit : onHandleSubmit)}>
