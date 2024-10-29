@@ -80,3 +80,6 @@ export const opportunitiesSlice = createSlice({
 });
 
 export const getOpportunities = (state: RootState) => state.opportunities.opportunities;
+
+export const getLoading = (state: RootState) => state.opportunities.loading;
+export const getError = (state: RootState) => state.opportunities.error;
