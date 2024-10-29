@@ -1,12 +1,10 @@
-import { UserData } from './User.interface';
-
 export interface Task {
   id: number;
   title: string;
   taskDate: string;
   notification: string;
   expirationDate: string;
-  user: UserData[];
+
   description: string;
 }
 
@@ -15,7 +13,7 @@ export interface TaskFormData {
   taskDate: string;
   notification: string;
   expirationDate: string;
-  user: UserData[];
+
   description: string;
 }
 
