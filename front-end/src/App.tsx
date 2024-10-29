@@ -1,5 +1,6 @@
 import { Provider } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import { AddUserToTask } from './components';
 import {
   CollaboratorsPage,
   LoginPage,
@@ -32,6 +33,7 @@ export const App = () => {
           <Route path="opportunities" element={<OpportunitiesPage />} />
 
           <Route path="tasks" element={<TasksPage />} />
+          <Route path="tasks-add-user/:id" element={<AddUserToTask />} />
 
           <Route path="*" element={<Navigate to="/" />} />
         </Route>
