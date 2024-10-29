@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { ParticipantService } from './participant.service';
 import { CreateParticipantDto } from './dto/create-participant.dto';
@@ -31,14 +32,14 @@ export class ParticipantController {
 
   @UseGuards(LoggerGuard)
   @Get(':id')
-  findOne(@Param('id') id: number) {
+  findOne(@Param('id', ParseIntPipe) id: number) {
     return this.participantService.findOne(id);
   }
 
   @UseGuards(LoggerGuard)
   @Patch(':id')
   update(
-    @Param('id') id: number,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateParticipantDto: UpdateParticipantDto,
   ) {
     return this.participantService.update(id, updateParticipantDto);
@@ -46,7 +47,7 @@ export class ParticipantController {
 
   @UseGuards(LoggerGuard)
   @Delete(':id')
-  remove(@Param('id') id: number) {
+  remove(@Param('id', ParseIntPipe) id: number) {
     return this.participantService.remove(id);
   }
 }

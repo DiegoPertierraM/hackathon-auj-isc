@@ -39,7 +39,7 @@ export class OpportunityController {
   @UseGuards(LoggerGuard)
   @Patch(':id')
   update(
-    @Param('id') id: number,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateOpportunityDto: UpdateOpportunityDto,
   ) {
     return this.opportunityService.update(id, updateOpportunityDto);
