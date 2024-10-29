@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { TaskFormModalProps } from '../../../interfaces/Task.interface';
+import { Task, TaskFormModalProps } from '../../../interfaces/Task.interface';
 import { Modal } from '../../modal/Modal';
 import './taskFormModal.scss';
 
@@ -57,7 +57,7 @@ export const TaskFormModal: React.FC<TaskFormModalProps> = ({ isOpen, onClose, o
       expirationDate: formatToISO8601(formData.expirationDate)
     };
     console.log(formattedData);
-    onAddTask(formattedData);
+    onAddTask(formattedData as Task);
     resetForm();
     onClose();
   };

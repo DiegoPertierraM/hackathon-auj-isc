@@ -22,7 +22,6 @@ export const TasksPage = () => {
     taskDate: '',
     notification: '',
     expirationDate: '',
-    UserTask: [{}],
     description: ''
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -67,7 +66,6 @@ export const TasksPage = () => {
       taskDate: '',
       notification: '',
       expirationDate: '',
-      UserTask: [],
       description: ''
     });
   };
