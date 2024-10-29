@@ -1,36 +1,63 @@
 // src/components/TaskFormModal.js
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Modal } from '../../modal/Modal';
 import './taskFormModal.scss';
-import { TaskFormData, TaskFormModalProps } from '../../../interfaces/Task.interface';
+import { TaskFormModalProps } from '../../../interfaces/Task.interface';
 
 export const TaskFormModal: React.FC<TaskFormModalProps> = ({ isOpen, onClose, onAddTask }) => {
+  const currentDate = useMemo(() => new Date(), []);
+  const nextDay = useMemo(() => {
+    const tempDate = new Date(currentDate);
+    tempDate.setDate(currentDate.getDate() + 1);
+    return tempDate;
+  }, [currentDate]);
+
+  const formatDate = (date: Date) => {
+    return date.toISOString().split('T')[0];
+  };
+
   const [formData, setFormData] = useState({
     title: '',
-    taskDate: '',
-    notification: '',
-    expirationDate: '',
+    taskDate: formatDate(currentDate),
+    notification: formatDate(currentDate),
+    expirationDate: formatDate(nextDay),
     description: ''
   });
 
-  const resetForm = () => {
-    setFormData({ title: '', taskDate: '', notification: '', expirationDate: '', description: '' });
-  };
+  const resetForm = useCallback(() => {
+    setFormData({
+      title: '',
+      taskDate: formatDate(currentDate),
+      notification: formatDate(nextDay),
+      expirationDate: formatDate(nextDay),
+      description: ''
+    });
+  }, [currentDate, nextDay]);
 
   useEffect(() => {
     if (!isOpen) {
       resetForm();
     }
-  }, [isOpen]);
+  }, [isOpen, resetForm]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prevState => ({ ...prevState, [name]: value }));
   };
 
+  const formatToISO8601 = (date: string) => {
+    return new Date(date + 'T00:00:00.000Z').toISOString();
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onAddTask(formData as TaskFormData);
+    const formattedData = {
+      ...formData,
+      taskDate: formatToISO8601(formData.taskDate),
+      notification: formatToISO8601(formData.notification),
+      expirationDate: formatToISO8601(formData.expirationDate)
+    };
+    onAddTask(formattedData);
     setFormData({ title: '', taskDate: '', notification: '', expirationDate: '', description: '' });
     onClose();
   };
