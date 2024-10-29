@@ -162,10 +162,9 @@ export const CollaboratorsPage = () => {
                   </td>
                 </tr>
               ))}
-
-              {!filteredCollaborators.length && <span>No se econtrarón resultados 😅</span>}
             </tbody>
           </table>
+          {!filteredCollaborators.length && <span>No se econtrarón resultados 😅</span>}
         </>
       )}
     </section>
