@@ -31,7 +31,7 @@ export const fetchCollaborators = createAsyncThunk('collaborators/fetchCollabora
 
 export const createCollaborator = createAsyncThunk(
   'collaborators/createCollaborator',
-  async (newCollaborator: Omit<Collaborator, 'id'>) => {
+  async (newCollaborator: Omit<Collaborator, 'id'>): Promise<Collaborator> => {
     const token = localStorage.getItem('token')?.replace(/['"]/g, '');
 
     const response = await fetch(`${baseUrl}collaborators`, {
@@ -42,8 +42,8 @@ export const createCollaborator = createAsyncThunk(
       },
       body: JSON.stringify(newCollaborator)
     });
-    console.log(await response.json());
-    return (await response.json()) as Collaborator;
+    const data = await response.json();
+    return data;
   }
 );
 

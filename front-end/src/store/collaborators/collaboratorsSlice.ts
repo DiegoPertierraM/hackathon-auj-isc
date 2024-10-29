@@ -2,10 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 import { Collaborator } from '../../interfaces/Collaborator.interface.ts';
 import { RootState } from '../store';
 import {
-  fetchCollaborators,
   createCollaborator,
-  updateCollaborator,
-  deleteCollaborator
+  deleteCollaborator,
+  fetchCollaborators,
+  updateCollaborator
 } from './collaboratorsThunk.ts';
 
 interface CollaboratorState {
