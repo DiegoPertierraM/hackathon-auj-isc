@@ -1,14 +1,14 @@
 import React from 'react';
 import { FieldError } from 'react-hook-form';
 import { IoWarningOutline } from 'react-icons/io5';
-import './input.scss';
 
-type InputProps = React.ComponentProps<'input'> & {
+type TextAreaFormProps = React.ComponentProps<'textarea'> & {
   label: string;
   error: FieldError | undefined;
 };
-export const FormInput = React.forwardRef(
-  ({ label, error, ...inputProps }: InputProps, ref: React.Ref<HTMLInputElement>) => {
+
+export const TextAreaForm = React.forwardRef(
+  ({ label, error, ...inputProps }: TextAreaFormProps, ref: React.Ref<HTMLTextAreaElement>) => {
     const rowError = error && 'row__error';
     return (
       <div className="row">
@@ -16,7 +16,8 @@ export const FormInput = React.forwardRef(
           {label}
         </label>
         <div className={`row__container ${rowError}`}>
-          <input ref={ref} className="row__input" autoComplete="off" {...inputProps} />
+          <textarea ref={ref} className="row__input" autoComplete="off" {...inputProps} />
+
           {error && <IoWarningOutline size={22} className="row__icon" />}
         </div>
         <span className="row__message">{error?.message} </span>
