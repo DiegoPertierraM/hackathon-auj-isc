@@ -14,7 +14,7 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { LoggerGuard } from '../core/guard/logger.guard';
-import { TokenService } from 'src/core/token/token.service';
+import { TokenService } from '../core/token/token.service';
 import * as bcrypt from 'bcryptjs';
 
 @Controller('user')
@@ -85,7 +85,10 @@ export class UserController {
 
   @UseGuards(LoggerGuard)
   @Patch(':id')
-  update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
     return this.userService.update(id, updateUserDto);
   }
   @UseGuards(LoggerGuard)

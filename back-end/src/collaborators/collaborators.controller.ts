@@ -12,7 +12,7 @@ import {
 import { CollaboratorsService } from './collaborators.service';
 import { CreateCollaboratorDto } from './dto/create-collaborator.dto';
 import { UpdateCollaboratorDto } from './dto/update-collaborator.dto';
-import { LoggerGuard } from 'src/core/guard/logger.guard';
+import { LoggerGuard } from '../core/guard/logger.guard';
 
 @Controller('collaborators')
 export class CollaboratorsController {

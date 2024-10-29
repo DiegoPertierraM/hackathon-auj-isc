@@ -4,7 +4,10 @@ const baseUrl = import.meta.env.VITE_API_URL;
 
 export const fetchParticipants = createAsyncThunk('participants/fetchParticipants', async () => {
   try {
-    const token = localStorage.getItem('token')!.replace(/['"]/g, '');
+    let token = localStorage.getItem('token');
+    if (token) {
+      token = token.replace(/['"]/g, '');
+    }
 
     if (!token) {
       console.log('No token found');

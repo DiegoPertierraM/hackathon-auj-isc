@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -31,7 +32,7 @@ export class TaskController {
 
   @UseGuards(LoggerGuard)
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', ParseIntPipe) id: string) {
     return this.taskService.findOne(+id);
   }
 
@@ -43,18 +44,18 @@ export class TaskController {
 
   @UseGuards(LoggerGuard)
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id', ParseIntPipe) id: string) {
     return this.taskService.remove(+id);
   }
   // Found user relacional to task
   @UseGuards(LoggerGuard)
   @Get(':taskId/users')
-  async getUsersByTask(@Param('taskId') taskId: number) {
+  async getUsersByTask(@Param('taskId', ParseIntPipe) taskId: number) {
     return this.taskService.getUsersByTask(taskId);
   }
   @UseGuards(LoggerGuard)
   @Get(':userId/tasks')
-  async getTasksByUser(@Param('userId') userId: number) {
+  async getTasksByUser(@Param('userId', ParseIntPipe) userId: number) {
     return this.taskService.getTasksByUser(userId);
   }
 }
