@@ -7,4 +7,5 @@ export class CreateTaskDto {
   expirationDate: Date;
   created: Date;
   updated: Date;
+  userId: number;
 }

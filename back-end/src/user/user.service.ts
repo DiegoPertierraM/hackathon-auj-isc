@@ -10,6 +10,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { SignUser, User } from './entities/user.entity';
 import { EmailService } from '../email/email.service';
+import { CreateTaskDto } from 'src/task/dto/create-task.dto';
 
 @Injectable()
 export class UserService {
@@ -113,6 +114,34 @@ export class UserService {
     );
 
     return taskToUser;
+  }
+  //create a task and assign it to a user id that come from body
+  async createTask(createTaskDto: CreateTaskDto, userIds: number[]) {
+    const { title, description, taskDate, notification, expirationDate } =
+      createTaskDto;
+
+    // Creare la task
+    const task = await this.service.task.create({
+      data: {
+        title,
+        description,
+        taskDate,
+        notification,
+        expirationDate,
+      },
+    });
+
+    // Associare gli utenti alla task
+    const taskOnUserData = userIds.map((userId) => ({
+      userId,
+      taskId: task.id,
+    }));
+
+    await this.service.userTask.createMany({
+      data: taskOnUserData,
+    });
+
+    return task;
   }
 
   // remove task to user

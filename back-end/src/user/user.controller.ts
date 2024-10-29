@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Controller,
   Get,
@@ -16,6 +17,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { LoggerGuard } from '../core/guard/logger.guard';
 import { TokenService } from '../core/token/token.service';
 import * as bcrypt from 'bcryptjs';
+import { CreateTaskDto } from '../task/dto/create-task.dto';
 
 @Controller('user')
 export class UserController {
@@ -104,6 +106,13 @@ export class UserController {
     @Param('taskId', ParseIntPipe) taskId: number,
   ) {
     return this.userService.addTaskToUser(userId, taskId);
+  }
+
+  @UseGuards(LoggerGuard)
+  @Post('userTask')
+  async createTaskWithUser(@Body() createTaskDto: CreateTaskDto) {
+    const { userId, ...taskData } = createTaskDto;
+    return this.userService.createTaskWithUser({ ...taskData, userId }, userId);
   }
 
   @UseGuards(LoggerGuard)
