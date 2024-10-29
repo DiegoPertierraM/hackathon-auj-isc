@@ -10,4 +10,4 @@
 
 - [Joselu](https://www.linkedin.com/in/j0selu/)
 - [Diego](https://www.linkedin.com/in/diego-pertierra-menendez/)
-- [Alicia](https://www.linkedin.com/in/eduardo-criado-web-developer/)
+- [Alicia](https://www.linkedin.com/in/alicia-galvez-rodriguez/)
