@@ -1,5 +1,75 @@
 # BACKEND with NestJS Impact Social Cup
 
+```
+back-end/
+├── .env
+├── .eslintrc.js
+├── .gitignore
+├── Dockerfile
+├── README.md
+├── docker-compose.yml
+├── nest-cli.json
+├── package-lock.json
+├── package.json
+├── prisma
+│ ├── dev.db
+│ ├── migrations/
+│ └── schema.prisma
+├── src
+│ ├── app.controller.spec.ts
+│ ├── app.controller.ts
+│ ├── app.module.ts
+│ ├── app.service.ts
+│ ├── main.ts
+│ ├── core
+│ │ ├── guard/
+│ │ ├── notificacion/
+│ │ └── token/
+│ ├── task
+│ │ ├── dto/
+│ │ ├── entities/
+│ │ ├── task.controller.spec.ts
+│ │ ├── task.controller.ts
+│ │ ├── task.module.ts
+│ │ ├── task.service.ts
+│ │ └── task.service.spec.ts
+│ ├── opportunity
+│ │ ├── dto/
+│ │ ├── entities/
+│ │ ├── opportunity.controller.spec.ts
+│ │ ├── opportunity.controller.ts
+│ │ ├── opportunity.module.ts
+│ │ ├── opportunity.service.ts
+│ │ └── opportunity.service.spec.ts
+│ ├── email
+│ │ ├── email.controller.spec.ts
+│ │ ├── email.controller.spec.ts
+│ │ ├── email.module.ts
+│ │ ├── email.service.ts
+│ │ └── email.service.spec.ts
+│ ├── collaborators
+│ │ ├── dto/
+│ │ ├── entities/
+│ │ ├── collaborators.controller.spec.ts
+│ │ ├── collaborators.controller.ts
+│ │ ├── collaborators.module.ts
+│ │ ├── collaborators.service.ts
+│ │ └── collaborators.service.spec.ts
+│ └── user
+│ ├── dto/
+│ ├── entities/
+│ ├── user.controller.spec.ts
+│ ├── user.controller.ts
+│ ├── user.module.ts
+│ ├── user.service.ts
+│ └── user.service.spec.ts
+
+├── test
+│ ├── app.e2e-spec.ts
+│ └── jest-e2e.json
+└── tsconfig.json
+```
+
 ## Route Description
 
 Marked with (\*) need token
