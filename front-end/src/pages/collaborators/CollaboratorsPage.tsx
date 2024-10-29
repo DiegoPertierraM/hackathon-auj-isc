@@ -1,9 +1,9 @@
-import { IoAddOutline, IoPencilOutline, IoTrashBinOutline } from 'react-icons/io5';
+import { IoAddOutline, IoCloseOutline, IoPencilOutline, IoSaveOutline, IoTrashBinOutline } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import { InputSearch, Title } from '../../components';
 import { getCollaborators, getError, getLoading } from '../../store/collaborators/collaboratorsSlice';
 import './collaborator.scss';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { AppDispatch } from '../../store/store';
 import {
   createCollaborator,
@@ -17,6 +17,14 @@ export const CollaboratorsPage = () => {
   const collaborators = useSelector(getCollaborators);
   const loading = useSelector(getLoading);
   const error = useSelector(getError);
+
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editedCollaborator, setEditedCollaborator] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    company: ''
+  });
 
   useEffect(() => {
     dispatch(fetchCollaborators());
@@ -33,15 +41,25 @@ export const CollaboratorsPage = () => {
     );
   };
 
-  const handleUpdate = (collaboratorId: number) => {
-    const updatedCollaborator = {
-      id: collaboratorId,
-      name: 'Updated Name',
-      email: 'updated@example.com',
-      phone: '987-654-3210',
-      company: 'UpdatedCo'
-    };
-    dispatch(updateCollaborator(updatedCollaborator));
+  const handleEditClick = (collaborator: (typeof collaborators)[0]) => {
+    setEditingId(collaborator.id);
+    setEditedCollaborator({ ...collaborator });
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setEditedCollaborator(prevState => ({ ...prevState, [name]: value }));
+  };
+
+  const handleSave = () => {
+    if (editingId) {
+      dispatch(updateCollaborator({ ...editedCollaborator, id: editingId }));
+      setEditingId(null);
+    }
+  };
+
+  const handleCancel = () => {
+    setEditingId(null);
   };
 
   const handleDelete = (collaboratorId: number) => {
@@ -76,13 +94,46 @@ export const CollaboratorsPage = () => {
         <tbody>
           {collaborators!.map(collaborator => (
             <tr key={collaborator.id} className="table__row">
-              <td className="table__data--name">{collaborator.name}</td>
-              <td className="table__data">{collaborator.email}</td>
-              <td className="table__data">{collaborator.phone}</td>
-              <td className="table__data">{collaborator.company}</td>
+              <td className="table__data--name">
+                {editingId === collaborator.id ? (
+                  <input type="text" name="name" value={editedCollaborator.name} onChange={handleChange} />
+                ) : (
+                  collaborator.name
+                )}
+              </td>
+              <td className="table__data">
+                {editingId === collaborator.id ? (
+                  <input type="email" name="email" value={editedCollaborator.email} onChange={handleChange} />
+                ) : (
+                  collaborator.email
+                )}
+              </td>
+              <td className="table__data">
+                {editingId === collaborator.id ? (
+                  <input type="text" name="phone" value={editedCollaborator.phone} onChange={handleChange} />
+                ) : (
+                  collaborator.phone
+                )}
+              </td>
+              <td className="table__data">
+                {editingId === collaborator.id ? (
+                  <input type="text" name="company" value={editedCollaborator.company} onChange={handleChange} />
+                ) : (
+                  collaborator.company
+                )}
+              </td>
               <td className="table__data table__data--actions">
-                <IoPencilOutline onClick={() => handleUpdate(collaborator.id)} role="button" tabIndex={0} />{' '}
-                <IoTrashBinOutline onClick={() => handleDelete(collaborator.id)} role="button" tabIndex={0} />
+                {editingId === collaborator.id ? (
+                  <>
+                    <IoSaveOutline onClick={handleSave} role="button" tabIndex={0} />
+                    <IoCloseOutline onClick={handleCancel} role="button" tabIndex={0} />
+                  </>
+                ) : (
+                  <>
+                    <IoPencilOutline onClick={() => handleEditClick(collaborator)} role="button" tabIndex={0} />
+                    <IoTrashBinOutline onClick={() => handleDelete(collaborator.id)} role="button" tabIndex={0} />
+                  </>
+                )}
               </td>
             </tr>
           ))}
