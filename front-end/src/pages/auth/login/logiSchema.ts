@@ -16,6 +16,12 @@ export const loginSchema = z.object({
 
 export const registerSchema = loginSchema
   .extend({
+    name: z
+      .string({
+        required_error: 'El nombre es requerido'
+      })
+      .min(1, { message: 'El nombre no puede estar vacío' }),
+    phone: z.string().optional(),
     confirmPassword: z
       .string({
         required_error: 'La confirmación de la contraseña es requerida'

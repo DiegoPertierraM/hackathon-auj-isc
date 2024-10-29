@@ -3,9 +3,15 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { FormInput } from '../../../components';
 import { Register, registerSchema } from '../login/logiSchema';
+import { getLoading } from '../../../store/auth/authSlice';
+import { registerThunk } from '../../../store/auth/authThunk';
+import { AppDispatch } from '../../../store/store';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const RegisterPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  const isLoading = useSelector(getLoading);
   const {
     register,
     handleSubmit,
@@ -14,9 +20,15 @@ export const RegisterPage = () => {
     resolver: zodResolver(registerSchema)
   });
 
-  const onHandleSubmit: SubmitHandler<Register> = data => {
-    console.log(data);
-    navigate('/');
+  const onHandleSubmit: SubmitHandler<Register> = async data => {
+    const { name, email, password, confirmPassword, phone } = data;
+
+    try {
+      await dispatch(registerThunk({ name, email, password, confirmPassword, phone }));
+      navigate('/');
+    } catch (error) {
+      console.error('Error en el registro:', error);
+    }
   };
 
   return (
@@ -27,6 +39,14 @@ export const RegisterPage = () => {
         <h2 className="auth-title">Regístrate</h2>
 
         <form className="login__form" onSubmit={handleSubmit(onHandleSubmit)}>
+          <FormInput
+            label="Nombre"
+            placeholder="Introduce tu nombre"
+            id="name"
+            type="name"
+            error={errors['name']}
+            {...register('name')}
+          />
           <FormInput
             label="Email"
             placeholder="Introduce tu email"
@@ -53,7 +73,7 @@ export const RegisterPage = () => {
           />
 
           <button className="login__form-btn" type="submit">
-            Registrarse
+            {isLoading ? 'Realizando registro...' : 'Registrarse'}
           </button>
           <p className="login__link-register">
             ¿Ya eres usuario?{' '}
