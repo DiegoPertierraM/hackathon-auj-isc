@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { CreateCollaboratorDto } from './dto/create-collaborator.dto';
 import { UpdateCollaboratorDto } from './dto/update-collaborator.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { Collaborators } from '@prisma/client';
 
 @Injectable()
