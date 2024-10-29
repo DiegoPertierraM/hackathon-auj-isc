@@ -1,10 +1,22 @@
+import { IoLogOutOutline } from 'react-icons/io5';
+import { useDispatch } from 'react-redux';
+import { onLogout } from '../../../store/auth/authSlice';
+import { removeUserData } from '../../../utils/userDataStore';
 import './header.scss';
 
 export const Header = () => {
-  // const userData = useSelector(getUserData);
+  const dispatch = useDispatch();
+  const logout = () => {
+    console.log('log');
+    dispatch(onLogout());
+    removeUserData();
+  };
 
   return (
     <header className="header">
+      <button onClick={logout}>
+        <IoLogOutOutline size={30} />
+      </button>
       <div className="avatar">
         <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clipPath="url(#clip0_63_1713)">
