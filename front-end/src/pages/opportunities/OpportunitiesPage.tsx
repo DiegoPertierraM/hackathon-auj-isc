@@ -17,7 +17,7 @@ export const OpportunitiesPage = () => {
   const opportunities = useSelector(getOpportunities);
   const dispatch = useDispatch<AppDispatch>();
   const loading = useSelector(getLoading);
-  const [serach, setSearch] = useState('');
+  const [search, setSearch] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [opportunityToEdit, setOpportunityToEdit] = useState<Opportunity | null>(null);
@@ -29,7 +29,7 @@ export const OpportunitiesPage = () => {
     setSearch(e.target.value);
   };
 
-  const opportunitiesFiltered = searchOpportunities(opportunities, serach);
+  const opportunitiesFiltered = searchOpportunities(opportunities, search);
 
   const handleEditClick = (event: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -71,7 +71,6 @@ export const OpportunitiesPage = () => {
               <IoAddOutline size={20} /> Añadir oportunidad
             </button>
           </div>
-          {!opportunitiesFiltered.length && <p>No hay oportunidades</p>}
 
           <table className="table">
             <thead className="table__head">
@@ -146,8 +145,8 @@ export const OpportunitiesPage = () => {
               ))}
             </tbody>
           </table>
-
           <OpportunitiesModal isOpen={isModalOpen} onClose={() => setIsModalOpen(!isModalOpen)} />
+          {!opportunitiesFiltered.length && <span>No se encontraron resultados 😅</span>}
         </>
       )}
     </section>
@@ -156,12 +155,11 @@ export const OpportunitiesPage = () => {
 
 const searchOpportunities = (opportunities: Opportunity[], search: string) => {
   if (!search) return opportunities;
-  const serachLower = search.toLowerCase();
+  const searchLower = search.toLowerCase();
 
   const oportunitiesdFiltered = opportunities.filter(opportunity =>
-    opportunity.name.toLowerCase().includes(serachLower)
+    opportunity.name.toLowerCase().includes(searchLower)
   );
 
-  console.log({ oportunitiesdFiltered });
   return oportunitiesdFiltered;
 };

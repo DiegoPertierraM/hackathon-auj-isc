@@ -195,6 +195,7 @@ export const TasksPage = () => {
               ))}
             </tbody>
           </table>
+          {!tasksFiltered.length && <span>No se encontraron resultados 😅</span>}
         </>
       )}
     </section>
