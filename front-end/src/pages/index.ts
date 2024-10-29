@@ -5,5 +5,3 @@ export * from './tasks/TasksPage';
 
 export * from './auth/login/LoginPage';
 export * from './auth/register/RegisterPage';
-
-export * from './opportunities/opportunities-form/OpportunitiersForm';
