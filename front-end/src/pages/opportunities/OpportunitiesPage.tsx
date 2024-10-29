@@ -43,6 +43,7 @@ export const OpportunitiesPage = () => {
     const oportunittieId = opportunityToEdit!.id;
     const opportunity = opportunityToEdit;
     if (!opportunity) return;
+    setOpportunityToEdit(null);
     await dispatch(updateOportinity({ oportunittieId, opportunity }));
   };
   const handleCancel = () => {
@@ -109,9 +110,9 @@ export const OpportunitiesPage = () => {
               <td className="table__data">
                 {opportunityToEdit?.id === opportunity.id ? (
                   <select value={opportunityToEdit.status} name="status" onChange={handleEditClick}>
-                    <option value="new">Nuevo</option>
-                    <option value="inProgress">En progreso</option>
-                    <option value="closed">Cerrado</option>
+                    <option value="new">new</option>
+                    <option value="inProgress">inProgress</option>
+                    <option value="closed">closed</option>
                   </select>
                 ) : (
                   opportunity.status

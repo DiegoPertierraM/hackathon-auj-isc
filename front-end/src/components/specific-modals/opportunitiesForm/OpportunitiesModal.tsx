@@ -53,9 +53,9 @@ export const OpportunitiesModal = ({ isOpen, onClose }: Props) => {
         <div className="form__select-container">
           <label htmlFor="status">Estado*</label>
           <select className="form__select" id="status" {...register('status')}>
-            <option value="new">Nuevo</option>
-            <option value="inProgress">En progreso</option>
-            <option value="closed">Cerrado</option>
+            <option value="new">new</option>
+            <option value="inProgress">inProgress</option>
+            <option value="closed">closed</option>
           </select>
         </div>
 
