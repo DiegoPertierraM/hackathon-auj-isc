@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { createTask, deleteTask, fetchTasks, updateTask } from '../../store/tasks/tasksThunk';
 import { TaskFormData } from '../../interfaces/Task.interface';
 import { TaskFormModal } from '../../components/specific-modals/TaskFormModal/taskFormModal';
+import { UserData } from '../../interfaces/User.interface';
 
 export const TasksPage = () => {
   const tasks = useSelector(getTasks);
@@ -21,6 +22,7 @@ export const TasksPage = () => {
     taskDate: '',
     notification: '',
     expirationDate: '',
+    user: [] as UserData[],
     description: ''
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,7 +37,9 @@ export const TasksPage = () => {
 
   const handleEditClick = (task: (typeof tasks)[0]) => {
     setEditingId(task.id);
-    setEditedTask({ ...task });
+    setEditedTask({
+      ...task
+    });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
@@ -52,7 +56,7 @@ export const TasksPage = () => {
 
   const handleCancel = () => {
     setEditingId(null);
-    setEditedTask({ title: '', taskDate: '', notification: '', expirationDate: '', description: '' });
+    setEditedTask({ title: '', taskDate: '', notification: '', expirationDate: '', user: [], description: '' });
   };
 
   const handleDelete = (taskId: number) => {
@@ -64,7 +68,9 @@ export const TasksPage = () => {
     return new Intl.DateTimeFormat('es-ES', {
       day: '2-digit',
       month: '2-digit',
-      year: 'numeric'
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
     }).format(date);
   };
 

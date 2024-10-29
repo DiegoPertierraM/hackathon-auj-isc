@@ -4,9 +4,11 @@ import { collaboratorsSlice } from './collaborators/collaboratorsSlice';
 import { opportunitiesSlice } from './opportunities/opportunitiesSlice';
 import { participantsSlice } from './participants/participantsSlice';
 import { tasksSlice } from './tasks/tasksSlice';
+import { usersSlice } from './users/usersSlice';
 
 export const store = configureStore({
   reducer: {
+    users: usersSlice.reducer,
     collaborators: collaboratorsSlice.reducer,
     participants: participantsSlice.reducer,
     opportunities: opportunitiesSlice.reducer,
