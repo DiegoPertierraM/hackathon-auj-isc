@@ -17,7 +17,7 @@ export const ParticipantsPage = () => {
     dispatch(fetchParticipants());
   }, [dispatch]);
 
-  if (loading === 'loading') return <p>Cargando participantes...</p>;
+  if (loading === 'loading') return <p className="data-loading">Cargando participantes...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
