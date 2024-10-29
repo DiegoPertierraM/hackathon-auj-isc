@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AppDispatch } from '../../../store/store';
@@ -14,12 +14,23 @@ export const AddUserToTask = () => {
 
   const navigate = useNavigate();
 
+  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+
   const onHandleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    await dispatch(addTaskToUser({ taskId: Number(id), userId: 1 }));
+    if (selectedUserId !== null) {
+      await dispatch(addTaskToUser({ taskId: Number(id), userId: selectedUserId }));
+      navigate('/tasks');
+    } else {
+      alert('Please select a user');
+    }
 
-    navigate(-1);
+    navigate('/tasks');
+  };
+
+  const handleUserChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedUserId(Number(event.target.value));
   };
 
   useEffect(() => {
@@ -32,7 +43,10 @@ export const AddUserToTask = () => {
       </button>
       <form className="add-user-form" onSubmit={onHandleSubmit}>
         <label htmlFor="user-select">Seleccionar Usuario</label>
-        <select name="user" id="user-select">
+        <select name="user" id="user-select" onChange={handleUserChange} value={selectedUserId || ''}>
+          <option value="" disabled>
+            -- Seleccione un usuario --
+          </option>
           {users.map(user => (
             <option key={user.id} value={user.id}>
               {user.name}

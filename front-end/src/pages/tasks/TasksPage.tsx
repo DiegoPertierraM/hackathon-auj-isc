@@ -44,9 +44,7 @@ export const TasksPage = () => {
 
   const handleEditClick = (task: (typeof tasks)[0]) => {
     setEditingId(task.id);
-    setEditedTask({
-      ...task
-    });
+    setEditedTask(task);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
@@ -63,7 +61,13 @@ export const TasksPage = () => {
 
   const handleCancel = () => {
     setEditingId(null);
-    setEditedTask({ title: '', taskDate: '', notification: '', expirationDate: '', description: '' });
+    setEditedTask({
+      title: '',
+      taskDate: '',
+      notification: '',
+      expirationDate: '',
+      description: ''
+    });
   };
 
   const handleDelete = (taskId: number) => {
@@ -108,6 +112,7 @@ export const TasksPage = () => {
                 <th>Fecha</th>
                 <th>Notificación</th>
                 <th>Fecha de expiración</th>
+                <th>Usuario asignado</th>
                 <th className="table__th">Descripción</th>
               </tr>
             </thead>
@@ -151,6 +156,11 @@ export const TasksPage = () => {
                     ) : (
                       formatDateToSpanish(task.expirationDate)
                     )}
+                  </td>
+                  <td className="table__data">
+                    {task.UserTask && task.UserTask.length > 0
+                      ? task.UserTask.map(userTask => <div key={userTask.userId}>{userTask.user.name}</div>)
+                      : 'Sin usuarios asignados'}
                   </td>
                   <td className="table__data--desc">
                     {editingId === task.id ? (
