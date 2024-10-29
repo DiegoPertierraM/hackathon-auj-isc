@@ -59,7 +59,7 @@ export const OpportunitiesPage = () => {
       <Title title="Oportunidades" />
 
       <div className="opportunities__header">
-        <InputSearch onSearch={onSearch} />
+        <InputSearch onSearch={onSearch} placeHolder="Buscar por nombre..." />
 
         <button className="button" onClick={() => setIsModalOpen(!isModalOpen)}>
           <IoAddOutline size={20} /> Añadir oportunidad
@@ -151,7 +151,7 @@ const searchOpportunities = (opportunities: Opportunity[], search: string) => {
   const serachLower = search.toLowerCase();
 
   const oportunitiesdFiltered = opportunities.filter(opportunity =>
-    opportunity.title.toLowerCase().includes(serachLower)
+    opportunity.name.toLowerCase().includes(serachLower)
   );
 
   console.log({ oportunitiesdFiltered });
