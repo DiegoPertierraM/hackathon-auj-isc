@@ -11,6 +11,8 @@ import {
   fetchCollaborators,
   updateCollaborator
 } from '../../store/collaborators/collaboratorsThunk';
+import { CollaboratorFormModal } from '../../components/specific-modals/CollaboratorFormModal/CollaboratorFormModal';
+import { CollaboratorFormData } from '../../interfaces/Collaborator.interface';
 
 export const CollaboratorsPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -25,20 +27,14 @@ export const CollaboratorsPage = () => {
     phone: '',
     company: ''
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     dispatch(fetchCollaborators());
   }, [dispatch]);
 
-  const handleCreate = () => {
-    dispatch(
-      createCollaborator({
-        name: 'New Collaborator',
-        email: 'new@example.com',
-        phone: '123-456-7890',
-        company: 'NewCo'
-      })
-    );
+  const handleAddCollaborator = (collaboratorData: CollaboratorFormData) => {
+    dispatch(createCollaborator(collaboratorData));
   };
 
   const handleEditClick = (collaborator: (typeof collaborators)[0]) => {
@@ -76,10 +72,16 @@ export const CollaboratorsPage = () => {
       <div className="collaborators__header">
         <InputSearch />
 
-        <button className="button" onClick={() => handleCreate()}>
+        <button className="button" onClick={() => setIsModalOpen(true)}>
           <IoAddOutline size={20} role="button" tabIndex={0} /> Añadir colaborador
         </button>
       </div>
+
+      <CollaboratorFormModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onAddCollaborator={handleAddCollaborator}
+      />
 
       <table className="table">
         <thead className="table__head">

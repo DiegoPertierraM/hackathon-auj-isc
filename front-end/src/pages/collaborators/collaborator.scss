@@ -21,6 +21,11 @@
   justify-content: center;
   gap: 0.2rem;
   cursor: pointer;
+  transition: 0.25s background-color;
+
+  &:hover {
+    background-color: var(--secondary-color);
+  }
 }
 
 .table {
