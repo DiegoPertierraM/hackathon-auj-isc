@@ -1,3 +1,7 @@
+.data-loading {
+  margin: 1rem 1.5rem;
+}
+
 .collaborators {
   display: flex;
   flex-direction: column;
@@ -21,6 +25,11 @@
   justify-content: center;
   gap: 0.2rem;
   cursor: pointer;
+  transition: 0.25s background-color;
+
+  &:hover {
+    background-color: var(--secondary-color);
+  }
 }
 
 .table {

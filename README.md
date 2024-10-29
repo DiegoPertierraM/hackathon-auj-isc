@@ -9,3 +9,8 @@
 - Seguimiento de Oportunidades: Gestionar oportunidades de colaboración con un flujo simple (nueva, en proceso, cerrada).
 - Gestión de Tareas: Asignar tareas y recordatorios automáticos para el equipo (ej. seguimientos, reuniones).
 - Acceso Multiusuario: Múltiples usuarios pueden colaborar en la gestión de datos y tareas.
+
+### Deploys
+
+- Front: https://impact-social-cup.netlify.app/
+- Back: https://hackathon-auj-isc.onrender.com/

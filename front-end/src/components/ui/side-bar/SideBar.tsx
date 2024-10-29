@@ -21,7 +21,7 @@ const aside: Aside[] = [
     icon: <IoNavigateOutline size={25} />
   },
   {
-    title: 'Tasks',
+    title: 'Tareas',
     path: '/tasks',
     icon: <IoCreateOutline size={25} />
   }

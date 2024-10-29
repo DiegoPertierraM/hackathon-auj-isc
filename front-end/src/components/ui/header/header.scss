@@ -2,6 +2,9 @@
   padding: 0.8rem 1rem;
   background-color: var(--secondary-color);
   color: var(--bg-color);
+
+  display: flex;
+  align-items: center;
 }
 
 .avatar {

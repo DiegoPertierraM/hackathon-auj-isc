@@ -6,3 +6,9 @@ export interface Participant {
   created: Date;
   updated: Date;
 }
+
+export interface ParticipantsCreate {
+  name: string;
+  email: string;
+  ticket: number;
+}

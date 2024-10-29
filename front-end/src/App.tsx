@@ -3,7 +3,6 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import {
   CollaboratorsPage,
   LoginPage,
-  OpportunitiersForm,
   OpportunitiesPage,
   ParticipantsPage,
   RegisterPage,
@@ -31,7 +30,6 @@ export const App = () => {
           <Route path="participants" element={<ParticipantsPage />} />
           <Route path="participants/:id" element={<ParticipantsPage />} />
           <Route path="opportunities" element={<OpportunitiesPage />} />
-          <Route path="opportunities-from/:id?" element={<OpportunitiersForm />} />
 
           <Route path="tasks" element={<TasksPage />} />
 

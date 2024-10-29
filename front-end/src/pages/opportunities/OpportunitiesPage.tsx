@@ -1,18 +1,25 @@
 import { useEffect, useState } from 'react';
-import { IoAddOutline, IoPencilOutline, IoTrashBinOutline } from 'react-icons/io5';
+import { IoAddOutline, IoCloseOutline, IoPencilOutline, IoSaveOutline, IoTrashBinOutline } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 import { InputSearch, Title } from '../../components';
+import { OpportunitiesModal } from '../../components/specific-modals/opportunitiesForm/OpportunitiesModal';
+import { Opportunity } from '../../interfaces/Opportunity.interface';
 import { getOpportunities } from '../../store/opportunities/opportunitiesSlice';
-import { deleteOportunity, getAllOpportunities } from '../../store/opportunities/opportunitiesThunk';
+import {
+  deleteOportunity,
+  getAllOpportunities,
+  updateOportinity
+} from '../../store/opportunities/opportunitiesThunk';
 import { AppDispatch } from '../../store/store';
-import { Opportunities } from './opportunities-form/opportunitiesSchema';
 import './opportunity.scss';
 
 export const OpportunitiesPage = () => {
   const opportunities = useSelector(getOpportunities);
   const dispatch = useDispatch<AppDispatch>();
   const [serach, setSearch] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [opportunityToEdit, setOpportunityToEdit] = useState<Opportunity | null>(null);
 
   const onDelete = async (id: number) => {
     await dispatch(deleteOportunity(id));
@@ -23,6 +30,26 @@ export const OpportunitiesPage = () => {
 
   const opportunitiesFiltered = searchOpportunities(opportunities, serach);
 
+  const handleEditClick = (event: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
+    const { name, value } = event.target;
+
+    setOpportunityToEdit(prevState => {
+      if (!prevState) return null;
+      return { ...prevState, [name]: value };
+    });
+  };
+
+  const handleSave = async () => {
+    const oportunittieId = opportunityToEdit!.id;
+    const opportunity = opportunityToEdit;
+    if (!opportunity) return;
+    await dispatch(updateOportinity({ oportunittieId, opportunity }));
+  };
+  const handleCancel = () => {
+    setIsEditing(!isEditing);
+    setOpportunityToEdit(null);
+  };
+
   useEffect(() => {
     dispatch(getAllOpportunities());
   }, [dispatch]);
@@ -32,49 +59,101 @@ export const OpportunitiesPage = () => {
       <Title title="Oportunidades" />
 
       <div className="opportunities__header">
-        <InputSearch onSearch={onSearch} />
+        <InputSearch onSearch={onSearch} placeHolder="Buscar por nombre..." />
 
-        <NavLink to={`/opportunities-from`} className="button">
+        <button className="button" onClick={() => setIsModalOpen(!isModalOpen)}>
           <IoAddOutline size={20} /> Añadir oportunidad
-        </NavLink>
+        </button>
       </div>
       {!opportunitiesFiltered.length && <p>No hay oportunidades</p>}
 
-      {!!opportunitiesFiltered.length && (
-        <table className="table">
-          <thead className="table__head">
-            <tr>
-              <th className="table__th">Nombre</th>
-              <th>Titulo</th>
-              <th>Description</th>
-              <th>Estado</th>
-            </tr>
-          </thead>
-          <tbody>
-            {opportunities.map(opportunity => (
-              <tr key={opportunity.id} className="table__row">
-                <td className="table__data--name">{opportunity.name}</td>
-                <td className="table__data--name">{opportunity.title}</td>
-                <td className="table__data--name">{opportunity.description}</td>
+      <table className="table">
+        <thead className="table__head">
+          <tr>
+            <th className="table__th">Nombre</th>
+            <th>Titulo</th>
+            <th>Description</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          {opportunitiesFiltered.map(opportunity => (
+            <tr key={opportunity.id} className="table__row">
+              <td className="table__data--name">
+                {opportunityToEdit?.id === opportunity.id ? (
+                  <input type="text" name="name" value={opportunityToEdit.name} onChange={handleEditClick} />
+                ) : (
+                  opportunity.name
+                )}
+              </td>
+              <td className="table__data--name">
+                {opportunityToEdit?.id === opportunity.id ? (
+                  <input type="text" name="title" value={opportunityToEdit.title} onChange={handleEditClick} />
+                ) : (
+                  opportunity.title
+                )}
+              </td>
+              <td className="table__data--name">
+                {opportunityToEdit?.id === opportunity.id ? (
+                  <input
+                    type="text"
+                    name="description"
+                    value={opportunityToEdit.description}
+                    onChange={handleEditClick}
+                  />
+                ) : (
+                  opportunity.description
+                )}
+              </td>
 
-                <td className="table__data">{opportunity.status}</td>
-                <td className="table__data table__data--actions">
-                  <NavLink to={`/opportunities-from/${opportunity.id}`}>
-                    <IoPencilOutline />
-                  </NavLink>
-                  <IoTrashBinOutline onClick={() => onDelete(opportunity.id)} />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+              <td className="table__data">
+                {opportunityToEdit?.id === opportunity.id ? (
+                  <select value={opportunityToEdit.status} name="status" onChange={handleEditClick}>
+                    <option value="new">Nuevo</option>
+                    <option value="inProgress">En progreso</option>
+                    <option value="closed">Cerrado</option>
+                  </select>
+                ) : (
+                  opportunity.status
+                )}
+              </td>
+              <td className="table__data table__data--actions">
+                {opportunityToEdit?.id === opportunity.id ? (
+                  <>
+                    <IoSaveOutline onClick={handleSave} role="button" tabIndex={0} />
+                    <IoCloseOutline onClick={handleCancel} role="button" tabIndex={0} />
+                  </>
+                ) : (
+                  <>
+                    <IoPencilOutline
+                      onClick={() => {
+                        setIsEditing(!isEditing);
+                        setOpportunityToEdit(opportunity);
+                      }}
+                    />
+
+                    <IoTrashBinOutline onClick={() => onDelete(opportunity.id)} />
+                  </>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <OpportunitiesModal isOpen={isModalOpen} onClose={() => setIsModalOpen(!isModalOpen)} />
     </section>
   );
 };
 
-const searchOpportunities = (opportunities: Opportunities[], search: string) => {
+const searchOpportunities = (opportunities: Opportunity[], search: string) => {
+  if (!search) return opportunities;
   const serachLower = search.toLowerCase();
 
-  return opportunities.filter(opportunity => opportunity.name.toLowerCase().includes(serachLower));
+  const oportunitiesdFiltered = opportunities.filter(opportunity =>
+    opportunity.name.toLowerCase().includes(serachLower)
+  );
+
+  console.log({ oportunitiesdFiltered });
+  return oportunitiesdFiltered;
 };

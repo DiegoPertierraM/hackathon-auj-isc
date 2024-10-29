@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Collaborator } from '../../interfaces/Collaborator.interface';
 
 const baseUrl = import.meta.env.VITE_API_URL;
+
 export const fetchCollaborators = createAsyncThunk('collaborators/fetchCollaborators', async () => {
   const token = localStorage.getItem('token')?.replace(/['"]/g, '');
   try {
@@ -30,7 +31,7 @@ export const fetchCollaborators = createAsyncThunk('collaborators/fetchCollabora
 
 export const createCollaborator = createAsyncThunk(
   'collaborators/createCollaborator',
-  async (newCollaborator: Omit<Collaborator, 'id'>) => {
+  async (newCollaborator: Omit<Collaborator, 'id'>): Promise<Collaborator> => {
     const token = localStorage.getItem('token')?.replace(/['"]/g, '');
 
     const response = await fetch(`${baseUrl}collaborators`, {
@@ -41,8 +42,8 @@ export const createCollaborator = createAsyncThunk(
       },
       body: JSON.stringify(newCollaborator)
     });
-    console.log(await response.json());
-    return (await response.json()) as Collaborator;
+    const data = await response.json();
+    return data;
   }
 );
 

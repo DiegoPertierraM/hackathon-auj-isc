@@ -1,9 +1,26 @@
+import { UserData } from './User.interface';
+
 export interface Task {
   id: number;
-  name: string;
-  format: Format;
-  date: string;
+  title: string;
+  taskDate: string;
+  notification: string;
+  expirationDate: string;
+  user: UserData[];
   description: string;
 }
 
-export type Format = 'Reunión' | 'Seguimiento';
+export interface TaskFormData {
+  title: string;
+  taskDate: string;
+  notification: string;
+  expirationDate: string;
+  user: UserData[];
+  description: string;
+}
+
+export interface TaskFormModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onAddTask: (task: TaskFormData) => void;
+}
