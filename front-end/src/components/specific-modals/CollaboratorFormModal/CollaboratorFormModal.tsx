@@ -1,5 +1,5 @@
 // src/components/CollaboratorFormModal.js
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Modal } from '../../modal/Modal';
 import './collaboratorFormModal.scss';
 import { CollaboratorFormModalProps } from '../../../interfaces/Collaborator.interface';
@@ -15,6 +15,16 @@ export const CollaboratorFormModal: React.FC<CollaboratorFormModalProps> = ({
     phone: '',
     company: ''
   });
+
+  const resetForm = () => {
+    setFormData({ name: '', email: '', phone: '', company: '' });
+  };
+
+  useEffect(() => {
+    if (!isOpen) {
+      resetForm();
+    }
+  }, [isOpen]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

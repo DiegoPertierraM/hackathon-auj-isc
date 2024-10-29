@@ -56,13 +56,14 @@ export const CollaboratorsPage = () => {
 
   const handleCancel = () => {
     setEditingId(null);
+    setEditedCollaborator({ name: '', email: '', phone: '', company: '' });
   };
 
   const handleDelete = (collaboratorId: number) => {
     dispatch(deleteCollaborator(collaboratorId));
   };
 
-  if (loading === 'loading') return <p>Cargando colaboradores...</p>;
+  if (loading === 'loading') return <p className="data-loading">Cargando colaboradores...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
