@@ -2,9 +2,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Collaborator } from '../../interfaces/Collaborator.interface';
 
 const baseUrl = import.meta.env.VITE_API_URL;
-const token = localStorage.getItem('token')!.replace(/['"]/g, '');
 
 export const fetchCollaborators = createAsyncThunk('collaborators/fetchCollaborators', async () => {
+  const token = localStorage.getItem('token')?.replace(/['"]/g, '');
   try {
     if (!token) {
       console.log('No token found');
@@ -32,6 +32,8 @@ export const fetchCollaborators = createAsyncThunk('collaborators/fetchCollabora
 export const createCollaborator = createAsyncThunk(
   'collaborators/createCollaborator',
   async (newCollaborator: Omit<Collaborator, 'id'>) => {
+    const token = localStorage.getItem('token')?.replace(/['"]/g, '');
+
     const response = await fetch(`${baseUrl}collaborators`, {
       method: 'POST',
       headers: {
@@ -48,6 +50,8 @@ export const createCollaborator = createAsyncThunk(
 export const updateCollaborator = createAsyncThunk(
   'collaborators/updateCollaborator',
   async (updatedCollaborator: Collaborator) => {
+    const token = localStorage.getItem('token')?.replace(/['"]/g, '');
+
     const response = await fetch(`${baseUrl}collaborators/${updatedCollaborator.id}`, {
       method: 'PATCH',
       headers: {
@@ -63,6 +67,8 @@ export const updateCollaborator = createAsyncThunk(
 export const deleteCollaborator = createAsyncThunk(
   'collaborators/deleteCollaborator',
   async (collaboratorId: number) => {
+    const token = localStorage.getItem('token')?.replace(/['"]/g, '');
+
     await fetch(`${baseUrl}collaborators/${collaboratorId}`, {
       method: 'DELETE',
       headers: {
