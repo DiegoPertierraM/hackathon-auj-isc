@@ -1,4 +1,3 @@
-'use client';
 import React from 'react';
 import { FieldError } from 'react-hook-form';
 import { IoWarningOutline } from 'react-icons/io5';
