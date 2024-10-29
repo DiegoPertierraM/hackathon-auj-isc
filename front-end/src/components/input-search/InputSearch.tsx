@@ -1,7 +1,7 @@
 import { IoSearchOutline } from 'react-icons/io5';
 import './inputSearch.scss';
 type Pops = {
-  onSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onSearch?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export const InputSearch = ({ onSearch }: Pops) => {
