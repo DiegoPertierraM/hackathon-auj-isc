@@ -174,5 +174,5 @@ $ npm run test:cov
 
 ## Author
 
-- [Daniele Quintiliani](www.linkedin.com/in/daniele-quintiliani)
+- [Daniele Quintiliani](https://www.linkedin.com/in/daniele-quintiliani/)
 - [Eduardo](https://www.linkedin.com/in/eduardo-criado-web-developer/)

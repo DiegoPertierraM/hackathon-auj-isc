@@ -139,6 +139,7 @@ export class UserService {
       user.email,
       'Task assigned',
       `You have been assigned to the task ${task.title}`,
+      `<h1>Task assigned</h1><br><p>You have been assigned to the task ${task.title} tendrà lugar a las ${task.taskDate.getHours()} el dia ${task.taskDate.getDay()} de ${task.taskDate.getMonth()}<strong>`,
     );
 
     return taskToUser;
