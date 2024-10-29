@@ -2,19 +2,15 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Modal } from '../../modal/Modal';
 import './taskFormModal.scss';
 import { TaskFormModalProps } from '../../../interfaces/Task.interface';
-import { useDispatch, useSelector } from 'react-redux';
-import { getUsers } from '../../../store/users/usersSlice';
-import { AppDispatch } from '../../../store/store';
-import { fetchUsers } from '../../../store/users/usersThunk';
 import { UserData } from '../../../interfaces/User.interface';
 
 export const TaskFormModal: React.FC<TaskFormModalProps> = ({ isOpen, onClose, onAddTask }) => {
-  const dispatch = useDispatch<AppDispatch>();
+  /*const dispatch = useDispatch<AppDispatch>();
   const users = useSelector(getUsers);
 
   useEffect(() => {
     dispatch(fetchUsers());
-  }, [dispatch]);
+  }, [dispatch]);*/
 
   const currentDate = useMemo(() => new Date(), []);
   const nextDay = useMemo(() => {
