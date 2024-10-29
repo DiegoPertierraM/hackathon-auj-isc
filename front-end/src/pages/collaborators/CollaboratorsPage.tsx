@@ -78,7 +78,7 @@ export const CollaboratorsPage = () => {
       <Title title="Colaboradores" />
 
       <div className="collaborators__header">
-        <InputSearch onSearch={onSearch} />
+        <InputSearch onSearch={onSearch} placeHolder="Buscar nombre..." />
 
         <button className="button" onClick={() => setIsModalOpen(true)}>
           <IoAddOutline size={20} role="button" tabIndex={0} /> Añadir colaborador
