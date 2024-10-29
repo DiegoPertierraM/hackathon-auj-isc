@@ -30,7 +30,16 @@ export class TaskService {
 
   async findAll(): Promise<Task[]> {
     try {
-      return await this.service.task.findMany();
+      return await this.service.task.findMany({
+        include: {
+          UserTask: {
+            // Include UserTask relation
+            include: {
+              user: true, // Include related user data
+            },
+          },
+        },
+      });
     } catch (error) {
       throw new InternalServerErrorException(error, 'Server Error');
     }
@@ -38,9 +47,23 @@ export class TaskService {
 
   async findOne(id: number): Promise<Task> {
     try {
-      return await this.service.task.findUnique({
+      const task = await this.service.task.findUnique({
         where: { id },
+        include: {
+          UserTask: {
+            // Include UserTask relation
+            include: {
+              user: true, // Include related user data
+            },
+          },
+        },
       });
+
+      if (!task) {
+        throw new NotFoundException(`Task with ID ${id} not found`);
+      }
+
+      return task;
     } catch (error) {
       if (error instanceof NotFoundException) {
         throw error;
