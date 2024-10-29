@@ -4,6 +4,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { AppDispatch } from '../../../store/store';
 import { getUsers } from '../../../store/users/usersSlice';
 import { addTaskToUser, fetchUsers } from '../../../store/users/usersThunk';
+import { IoArrowBackOutline } from 'react-icons/io5';
+import './addUserToTask.scss';
 
 export const AddUserToTask = () => {
   const { id } = useParams<{ id: string }>();
@@ -24,15 +26,20 @@ export const AddUserToTask = () => {
     dispatch(fetchUsers());
   }, [dispatch]);
   return (
-    <section>
-      <form action="" onSubmit={onHandleSubmit}>
-        <select name="" id="">
+    <section className="add-user">
+      <button className="back-button" onClick={() => navigate(-1)}>
+        <IoArrowBackOutline size={24} role="button" tabIndex={0} />
+      </button>
+      <form className="add-user-form" onSubmit={onHandleSubmit}>
+        <label htmlFor="user-select">Seleccionar Usuario</label>
+        <select name="user" id="user-select">
           {users.map(user => (
-            <option value={user.id}>{user.name}</option>
+            <option key={user.id} value={user.id}>
+              {user.name}
+            </option>
           ))}
         </select>
-
-        <button type="submit">enviar</button>
+        <button type="submit">Enviar</button>
       </form>
     </section>
   );
