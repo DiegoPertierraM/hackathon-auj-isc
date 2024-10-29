@@ -40,9 +40,13 @@ export const ParticipantsPage = () => {
   };
   const handleSave = async () => {
     const participantId = participantToEdit!.id;
-    const participant = participantToEdit;
+    let participant = participantToEdit;
     if (!participant) return;
+    const editedTicket = Number(participant.ticket);
+    participant = { ...participant, ticket: editedTicket };
+
     await dispatch(updateParticipant({ participantId, participant }));
+    setParticipantToEdit(null);
     setIsEditing(!isEditing);
   };
   const handleCancel = () => {

@@ -62,7 +62,7 @@ export const createParticipant = createAsyncThunk<Participant, ParticipantsCreat
       const data = await response.json();
       return data;
     } catch (error) {
-      return thunkAPI.rejectWithValue('Error de red o del servidor');
+      return thunkAPI.rejectWithValue(`${error}`);
     }
   }
 );
@@ -95,7 +95,7 @@ export const deleteParticipant = createAsyncThunk<Participant, number, { rejectV
       const data = await response.json();
       return data;
     } catch (error) {
-      return thunkAPI.rejectWithValue('Error de red o del servidor');
+      return thunkAPI.rejectWithValue(`${error}`);
     }
   }
 );
@@ -130,7 +130,7 @@ export const updateParticipant = createAsyncThunk<Participant, UpdateParticipant
       console.log({ data });
       return data;
     } catch (error) {
-      return thunkAPI.rejectWithValue('Error de red o del servidor');
+      return thunkAPI.rejectWithValue(`${error}`);
     }
   }
 );
