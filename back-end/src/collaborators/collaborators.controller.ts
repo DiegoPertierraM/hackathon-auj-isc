@@ -39,7 +39,7 @@ export class CollaboratorsController {
   @UseGuards(LoggerGuard)
   @Patch(':id')
   update(
-    @Param('id') id: number,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateCollaboratorDto: UpdateCollaboratorDto,
   ) {
     return this.collaboratorsService.update(+id, updateCollaboratorDto);
@@ -47,7 +47,7 @@ export class CollaboratorsController {
 
   @UseGuards(LoggerGuard)
   @Delete(':id')
-  remove(@Param('id') id: number) {
+  remove(@Param('id', ParseIntPipe) id: number) {
     return this.collaboratorsService.remove(+id);
   }
 }

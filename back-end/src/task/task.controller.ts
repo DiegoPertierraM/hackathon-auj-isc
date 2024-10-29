@@ -38,7 +38,10 @@ export class TaskController {
 
   @UseGuards(LoggerGuard)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
+  update(
+    @Param('id', ParseIntPipe) id: string,
+    @Body() updateTaskDto: UpdateTaskDto,
+  ) {
     return this.taskService.update(+id, updateTaskDto);
   }
 
