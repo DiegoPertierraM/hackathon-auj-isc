@@ -109,6 +109,7 @@ export const TasksPage = () => {
                 <th>Notificación</th>
                 <th>Fecha de expiración</th>
                 <th className="table__th">Descripción</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
