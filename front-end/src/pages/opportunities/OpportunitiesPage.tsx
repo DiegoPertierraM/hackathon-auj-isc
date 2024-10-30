@@ -78,7 +78,7 @@ export const OpportunitiesPage = () => {
               <tr>
                 <th className="table__th">Nombre</th>
                 <th>Titulo</th>
-                <th>Description</th>
+                <th>Descripción</th>
                 <th>Estado</th>
                 <th>Acciones</th>
               </tr>
