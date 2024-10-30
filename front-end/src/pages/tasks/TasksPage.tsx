@@ -96,7 +96,7 @@ export const TasksPage = () => {
       ) : (
         <>
           <div className="tasks__header">
-            <InputSearch onSearch={onSearch} placeHolder="Buscar nombre.." />
+            <InputSearch onSearch={onSearch} placeHolder="Buscar tarea.." />
 
             <button className="button" onClick={() => setIsModalOpen(true)}>
               <IoAddOutline size={20} role="button" tabIndex={0} /> Añadir tarea

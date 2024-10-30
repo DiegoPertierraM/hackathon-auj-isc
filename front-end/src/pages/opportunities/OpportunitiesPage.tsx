@@ -79,6 +79,7 @@ export const OpportunitiesPage = () => {
                 <th>Titulo</th>
                 <th>Description</th>
                 <th>Estado</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
