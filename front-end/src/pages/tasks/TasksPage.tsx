@@ -114,6 +114,7 @@ export const TasksPage = () => {
                 <th>Fecha de expiración</th>
                 <th>Usuario asignado</th>
                 <th className="table__th">Descripción</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
