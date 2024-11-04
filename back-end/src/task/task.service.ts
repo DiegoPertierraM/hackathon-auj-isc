@@ -10,12 +10,14 @@ import { PrismaService } from '../prisma/prisma.service';
 import { Task } from './entities/task.entity';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { EmailService } from '../email/email.service';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class TaskService {
   constructor(
     private readonly service: PrismaService,
     private readonly mailService: EmailService,
+    private readonly userService: UserService,
   ) {}
 
   async create(createTaskDto: CreateTaskDto): Promise<Task> {
@@ -88,9 +90,14 @@ export class TaskService {
 
   async remove(id: number): Promise<Task> {
     try {
-      return await this.service.task.delete({
+      const taskByUser = await this.findUsersByTaskId(id);
+      for (const task of taskByUser) {
+        await this.userService.removeTaskToUser(task.id, id);
+      }
+      const removetask = await this.service.task.delete({
         where: { id },
       });
+      return removetask;
     } catch (error) {
       if (error.code === 'P2025') {
         throw new NotFoundException(`Task with ID ${id} not found`);
@@ -152,13 +159,17 @@ export class TaskService {
         const users = await this.findUsersByTaskId(task.id);
         for (const user of users) {
           try {
+            const formattedMinutes = taskDate
+              .getMinutes()
+              .toString()
+              .padStart(2, '0');
             console.log(`Checking task expiration by email to ${user.email}`);
             await this.mailService.sendEmail(
               'Impact Social Cup',
               user.email,
-              'Notificacion de tarea',
-              `La tarea ${task.title} tiene lugar mañana a las ${taskDate.getHours()}:${taskDate.getMinutes()}`,
-              `<h1>La tarea ${task.title} tiene lugar mañana a las ${taskDate.getHours()}:${taskDate.getMinutes()}</h1>`,
+              `Notificacion de tarea ${task.title}: tarea de mañana`,
+              `La tarea ${task.title} tiene lugar mañana a las ${taskDate.getHours()}:${formattedMinutes}}`,
+              `<h1>La tarea ${task.title} tiene lugar mañana a las ${taskDate.getHours()}:${formattedMinutes}}</h1>`,
             );
           } catch (error) {
             console.error('Error sending email:', error);
@@ -186,11 +197,15 @@ export class TaskService {
         const users = await this.findUsersByTaskId(task.id);
         for (const user of users) {
           try {
+            const formattedMinutes = new Date(task.expirationDate)
+              .getMinutes()
+              .toString()
+              .padStart(2, '0');
             await this.mailService.sendEmail(
               'Impact Social Cup',
               user.email,
-              'Notificacion de tarea',
-              `La tarea ${task.title} ${task.description}expira mañana a las ${new Date(task.expirationDate).getHours()}:${new Date(task.expirationDate).getMinutes()}`,
+              `Notificacion de tarea ${task.title}: expira mañana`,
+              `La tarea ${task.title} ${task.description}expira mañana a las ${new Date(task.expirationDate).getHours()}:${formattedMinutes}`,
               `<h1>La tarea ${task.title} expira mañana a las ${new Date(task.expirationDate).getHours()}:${new Date(task.expirationDate).getMinutes()}</h1>`,
             );
           } catch (error) {
@@ -211,12 +226,16 @@ export class TaskService {
         const users = await this.findUsersByTaskId(task.id);
         for (const user of users) {
           try {
+            const formattedMinutes = taskDate
+              .getMinutes()
+              .toString()
+              .padStart(2, '0');
             await this.mailService.sendEmail(
               'Impact Social Cup',
               user.email,
-              'Notificacion de tarea',
-              `La tarea ${task.title} tiene lugar ${taskDate.getDate()} a las ${taskDate.getHours()}:${taskDate.getMinutes()}`,
-              `<h1>La tarea ${task.title} tiene lugar ${taskDate.getDate()} a las ${taskDate.getHours()}:${taskDate.getMinutes()}</h1>`,
+              `Notificacion de tarea ${task.title}`,
+              `La tarea ${task.title} tiene lugar ${taskDate.getDate()} a las ${taskDate.getHours()}:${formattedMinutes}`,
+              `<h1>La tarea ${task.title} tiene lugar ${taskDate.getDate()} a las ${taskDate.getHours()}:${formattedMinutes}</h1>`,
             );
           } catch (error) {
             console.error('Error sending email:', error);
