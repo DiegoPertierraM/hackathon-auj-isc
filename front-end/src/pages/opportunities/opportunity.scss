@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   row-gap: 1.5rem;
+
   &__header {
     display: flex;
     align-items: center;
@@ -31,25 +32,55 @@
   &__head {
     background-color: #f9fafb;
     text-align: left;
+
     &-row {
       padding: 1rem;
     }
   }
+
   &__th {
     padding: 0.5rem 0;
   }
+
   &__row {
     text-align: left;
   }
+
   &__data {
     padding: 1rem 0;
+
     &--actions {
       display: flex;
       gap: 1rem;
       justify-content: center;
     }
+
     &--name {
       max-width: 15ch;
     }
+  }
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.2rem;
+  font-size: 0.9em;
+  font-weight: bold;
+  color: #333;
+
+  &.table__data--status-new {
+    background-color: hsl(210, 10%, 20%);
+    color: whitesmoke;
+  }
+
+  &.table__data--status-inProgress {
+    background-color: rgb(252, 211, 77);
+    color: hsl(0, 0%, 10%);
+  }
+
+  &.table__data--status-closed {
+    background-color: hsl(0, 85%, 50%);
+    color: white;
   }
 }

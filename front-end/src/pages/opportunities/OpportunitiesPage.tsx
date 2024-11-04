@@ -120,7 +120,9 @@ export const OpportunitiesPage = () => {
                         <option value="closed">closed</option>
                       </select>
                     ) : (
-                      opportunity.status
+                      <span className={`status-badge table__data--status-${opportunity.status}`}>
+                        {opportunity.status}
+                      </span>
                     )}
                   </td>
                   <td className="table__data table__data--actions">
