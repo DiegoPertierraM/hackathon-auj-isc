@@ -10,12 +10,14 @@ import { PrismaService } from '../prisma/prisma.service';
 import { Task } from './entities/task.entity';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { EmailService } from '../email/email.service';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class TaskService {
   constructor(
     private readonly service: PrismaService,
     private readonly mailService: EmailService,
+    private readonly userService: UserService,
   ) {}
 
   async create(createTaskDto: CreateTaskDto): Promise<Task> {
@@ -88,9 +90,14 @@ export class TaskService {
 
   async remove(id: number): Promise<Task> {
     try {
-      return await this.service.task.delete({
+      const taskByUser = await this.findUsersByTaskId(id);
+      for (const task of taskByUser) {
+        await this.userService.removeTaskToUser(task.id, id);
+      }
+      const removetask = await this.service.task.delete({
         where: { id },
       });
+      return removetask;
     } catch (error) {
       if (error.code === 'P2025') {
         throw new NotFoundException(`Task with ID ${id} not found`);
