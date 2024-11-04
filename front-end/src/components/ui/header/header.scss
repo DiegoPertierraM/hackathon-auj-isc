@@ -2,9 +2,13 @@
   padding: 0.8rem 1rem;
   background-color: var(--secondary-color);
   color: var(--bg-color);
-
+  flex-direction: row-reverse;
   display: flex;
+  gap: 20px;
   align-items: center;
+}
+header button {
+  cursor: pointer;
 }
 
 .avatar {
