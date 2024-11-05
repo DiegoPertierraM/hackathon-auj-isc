@@ -29,3 +29,37 @@ header button {
     color: var(--bg-color);
   }
 }
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-content button {
+  margin: 5px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 4px;
+  gap: 20px;
+}
+
+.modal-buttons button {
+  margin: 0 10px;
+}

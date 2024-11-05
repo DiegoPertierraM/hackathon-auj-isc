@@ -1,5 +1,13 @@
 import { useEffect, useState } from 'react';
-import { IoAddOutline, IoCloseOutline, IoPencilOutline, IoSaveOutline, IoTrashBinOutline } from 'react-icons/io5';
+import {
+  IoAddOutline,
+  IoCloseOutline,
+  IoPencilOutline,
+  IoSaveOutline,
+  IoTrashBinOutline,
+  IoArrowBackOutline,
+  IoArrowForwardOutline
+} from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import { InputSearch, Skleton, Title } from '../../components';
 import { OpportunitiesModal } from '../../components/specific-modals/opportunitiesForm/OpportunitiesModal';
@@ -22,6 +30,9 @@ export const OpportunitiesPage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [opportunityToEdit, setOpportunityToEdit] = useState<Opportunity | null>(null);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
+
   const onDelete = async (id: number) => {
     await dispatch(deleteOportunity(id));
   };
@@ -31,9 +42,15 @@ export const OpportunitiesPage = () => {
 
   const opportunitiesFiltered = searchOpportunities(opportunities, search);
 
+  // Calcular paginación
+  const totalPages = Math.ceil(opportunitiesFiltered.length / itemsPerPage);
+  const paginatedOpportunities = opportunitiesFiltered.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   const handleEditClick = (event: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = event.target;
-
     setOpportunityToEdit(prevState => {
       if (!prevState) return null;
       return { ...prevState, [name]: value };
@@ -47,6 +64,7 @@ export const OpportunitiesPage = () => {
     setOpportunityToEdit(null);
     await dispatch(updateOportinity({ oportunittieId, opportunity }));
   };
+
   const handleCancel = () => {
     setIsEditing(!isEditing);
     setOpportunityToEdit(null);
@@ -55,6 +73,14 @@ export const OpportunitiesPage = () => {
   useEffect(() => {
     dispatch(getAllOpportunities());
   }, [dispatch]);
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) setCurrentPage(prev => prev - 1);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) setCurrentPage(prev => prev + 1);
+  };
 
   return (
     <section className="opportunities section">
@@ -66,7 +92,6 @@ export const OpportunitiesPage = () => {
         <>
           <div className="opportunities__header">
             <InputSearch onSearch={onSearch} placeHolder="Buscar por nombre..." />
-
             <button className="button" onClick={() => setIsModalOpen(!isModalOpen)}>
               <IoAddOutline size={20} /> Añadir oportunidad
             </button>
@@ -83,7 +108,7 @@ export const OpportunitiesPage = () => {
               </tr>
             </thead>
             <tbody>
-              {opportunitiesFiltered.map(opportunity => (
+              {paginatedOpportunities.map(opportunity => (
                 <tr key={opportunity.id} className="table__row">
                   <td className="table__data--name">
                     {opportunityToEdit?.id === opportunity.id ? (
@@ -111,7 +136,6 @@ export const OpportunitiesPage = () => {
                       opportunity.description
                     )}
                   </td>
-
                   <td className="table__data">
                     {opportunityToEdit?.id === opportunity.id ? (
                       <select value={opportunityToEdit.status} name="status" onChange={handleEditClick}>
@@ -139,7 +163,6 @@ export const OpportunitiesPage = () => {
                             setOpportunityToEdit(opportunity);
                           }}
                         />
-
                         <IoTrashBinOutline onClick={() => onDelete(opportunity.id)} />
                       </>
                     )}
@@ -148,8 +171,23 @@ export const OpportunitiesPage = () => {
               ))}
             </tbody>
           </table>
+
           <OpportunitiesModal isOpen={isModalOpen} onClose={() => setIsModalOpen(!isModalOpen)} />
           {!opportunitiesFiltered.length && <span>No se encontraron resultados 😅</span>}
+
+          <div className="pagination">
+            <button className="pagination__arrow" onClick={handlePrevPage} disabled={currentPage === 1}>
+              <IoArrowBackOutline size={24} />
+            </button>
+
+            <span>
+              Página {currentPage} de {totalPages}
+            </span>
+
+            <button className="pagination__arrow" onClick={handleNextPage} disabled={currentPage === totalPages}>
+              <IoArrowForwardOutline size={24} />
+            </button>
+          </div>
         </>
       )}
     </section>
@@ -159,10 +197,5 @@ export const OpportunitiesPage = () => {
 const searchOpportunities = (opportunities: Opportunity[], search: string) => {
   if (!search) return opportunities;
   const searchLower = search.toLowerCase();
-
-  const oportunitiesdFiltered = opportunities.filter(opportunity =>
-    opportunity.name.toLowerCase().includes(searchLower)
-  );
-
-  return oportunitiesdFiltered;
+  return opportunities.filter(opportunity => opportunity.name.toLowerCase().includes(searchLower));
 };

@@ -4,20 +4,34 @@ import { getUserData, onLogout } from '../../../store/auth/authSlice';
 import { removeUserData } from '../../../utils/userDataStore';
 import './header.scss';
 import { AppDispatch } from '../../../store/store';
+import { useState } from 'react';
 
 export const Header = () => {
   const dispatch = useDispatch<AppDispatch>();
   const userData = useSelector(getUserData);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const logout = () => {
-    console.log('log');
     dispatch(onLogout());
     removeUserData();
   };
 
+  const handleLogoutClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const confirmLogout = () => {
+    logout();
+    setIsModalOpen(false);
+  };
+
+  const cancelLogout = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <header className="header">
-      <button onClick={logout}>
+      <button onClick={handleLogoutClick}>
         <IoLogOutOutline size={30} />
       </button>
       <div className="avatar">
@@ -40,6 +54,18 @@ export const Header = () => {
           {userData?.username} <span className="avatar__email">{userData?.userEmail}</span>
         </span>
       </div>
+
+      {isModalOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2>¿Estás seguro de que deseas salir?</h2>
+            <div className="modal-buttons">
+              <button onClick={confirmLogout}>Sí</button>
+              <button onClick={cancelLogout}>No</button>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 };

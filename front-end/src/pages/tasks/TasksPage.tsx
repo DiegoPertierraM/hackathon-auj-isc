@@ -1,5 +1,13 @@
 import { useEffect, useState } from 'react';
-import { IoAddOutline, IoCloseOutline, IoPencilOutline, IoSaveOutline, IoTrashBinOutline } from 'react-icons/io5';
+import {
+  IoAddOutline,
+  IoCloseOutline,
+  IoPencilOutline,
+  IoSaveOutline,
+  IoTrashBinOutline,
+  IoArrowBackOutline,
+  IoArrowForwardOutline
+} from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { InputSearch, Skleton, Title } from '../../components';
@@ -25,13 +33,21 @@ export const TasksPage = () => {
     description: ''
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [search, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const TASKS_PER_PAGE = 10;
 
   const tasksFiltered = searchTasks(tasks, search);
 
+  const startIndex = (currentPage - 1) * TASKS_PER_PAGE;
+  const currentTasks = tasksFiltered.slice(startIndex, startIndex + TASKS_PER_PAGE);
+
+  const totalPages = Math.ceil(tasksFiltered.length / TASKS_PER_PAGE);
+
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
+    setCurrentPage(1);
   };
 
   useEffect(() => {
@@ -87,6 +103,14 @@ export const TasksPage = () => {
 
   if (error) return <p>Error: {error}</p>;
 
+  const handlePrevPage = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  };
+
   return (
     <section className="tasks section">
       <Title title="Tareas" />
@@ -118,7 +142,7 @@ export const TasksPage = () => {
               </tr>
             </thead>
             <tbody>
-              {tasksFiltered.map(task => (
+              {currentTasks.map(task => (
                 <tr key={task.id} className="table__row">
                   <td className="table__data--name">
                     {editingId === task.id ? (
@@ -197,6 +221,18 @@ export const TasksPage = () => {
             </tbody>
           </table>
           {!tasksFiltered.length && <span>No se encontraron resultados 😅</span>}
+
+          <div className="pagination">
+            <button className="pagination__button" onClick={handlePrevPage} disabled={currentPage === 1}>
+              <IoArrowBackOutline size={24} />
+            </button>
+            <span>
+              Página {currentPage} de {totalPages}
+            </span>
+            <button className="pagination__button" onClick={handleNextPage} disabled={currentPage === totalPages}>
+              <IoArrowForwardOutline size={24} />
+            </button>
+          </div>
         </>
       )}
     </section>
