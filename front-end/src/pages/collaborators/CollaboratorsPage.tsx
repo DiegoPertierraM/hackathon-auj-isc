@@ -1,5 +1,13 @@
 import { useEffect, useState } from 'react';
-import { IoAddOutline, IoCloseOutline, IoPencilOutline, IoSaveOutline, IoTrashBinOutline } from 'react-icons/io5';
+import {
+  IoAddOutline,
+  IoCloseOutline,
+  IoPencilOutline,
+  IoSaveOutline,
+  IoTrashBinOutline,
+  IoArrowBackOutline,
+  IoArrowForwardOutline
+} from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import { InputSearch, Skleton, Title } from '../../components';
 import { CollaboratorFormModal } from '../../components/specific-modals/CollaboratorFormModal/CollaboratorFormModal';
@@ -29,6 +37,9 @@ export const CollaboratorsPage = () => {
     company: ''
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
 
   const filteredCollaborators = searchCollaborators(collaborators, searchTerm);
 
@@ -70,6 +81,20 @@ export const CollaboratorsPage = () => {
     dispatch(deleteCollaborator(collaboratorId));
   };
 
+  const totalPages = Math.ceil(filteredCollaborators.length / itemsPerPage);
+  const paginatedCollaborators = filteredCollaborators.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) setCurrentPage(prev => prev - 1);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) setCurrentPage(prev => prev + 1);
+  };
+
   if (error) return <p>Error: {error}</p>;
 
   return (
@@ -82,7 +107,6 @@ export const CollaboratorsPage = () => {
         <>
           <div className="collaborators__header">
             <InputSearch onSearch={onSearch} placeHolder="Buscar nombre..." />
-
             <button className="button" onClick={() => setIsModalOpen(true)}>
               <IoAddOutline size={20} role="button" tabIndex={0} /> Añadir colaborador
             </button>
@@ -104,7 +128,7 @@ export const CollaboratorsPage = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredCollaborators.map(collaborator => (
+              {paginatedCollaborators.map(collaborator => (
                 <tr key={collaborator.id} className="table__row">
                   <td className="table__data--name">
                     {editingId === collaborator.id ? (
@@ -164,7 +188,22 @@ export const CollaboratorsPage = () => {
               ))}
             </tbody>
           </table>
-          {!filteredCollaborators.length && <span>No se encontraron resultados 😅</span>}
+          {!paginatedCollaborators.length && <span>No se encontraron resultados 😅</span>}
+
+          {/* Contenedor de paginación con flechas en los extremos */}
+          <div className="pagination">
+            <button className="pagination__arrow" onClick={handlePrevPage} disabled={currentPage === 1}>
+              <IoArrowBackOutline size={24} />
+            </button>
+
+            <span>
+              Página {currentPage} de {totalPages}
+            </span>
+
+            <button className="pagination__arrow" onClick={handleNextPage} disabled={currentPage === totalPages}>
+              <IoArrowForwardOutline size={24} />
+            </button>
+          </div>
         </>
       )}
     </section>
