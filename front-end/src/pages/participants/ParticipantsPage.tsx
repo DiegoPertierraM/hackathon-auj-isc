@@ -32,7 +32,6 @@ export const ParticipantsPage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [participantToEdit, setParticipantToEdit] = useState<Participant | null>(null);
 
-  // Estado de paginación
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
 
