@@ -42,7 +42,6 @@ export const OpportunitiesPage = () => {
 
   const opportunitiesFiltered = searchOpportunities(opportunities, search);
 
-  // Calcular paginación
   const totalPages = Math.ceil(opportunitiesFiltered.length / itemsPerPage);
   const paginatedOpportunities = opportunitiesFiltered.slice(
     (currentPage - 1) * itemsPerPage,
